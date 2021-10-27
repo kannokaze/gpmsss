@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>专业信息管理 --管理员页面</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <!-- 页面次要css -->
+    <style>
+    </style>
+</head>
+
+<body>
+    <input type="hidden" name="upDo" class="upDo">
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-list icon"></i>表格导入
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-upload-drag" id="test10" style="width: 350px;">
+                        <i class="layui-icon"></i>
+                        <p>点击上传，或将文件拖拽到此处</p>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="result">
+                        <div class="failCount layui-word-aux"></div>
+                        <table id="failList" class="layui-table failList" lay-filter="failList"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 导出表格 -->
+    <!--     <button type="button" class="layui-btn layui-btn-lg">
+    <a href="http://localhost:8080/gpms/api/download/outputExcel" style="text-decoration: none; color: #fff;">
+        <i class="layui-icon layui-icon-download-circle"></i>下载</a></button> -->
+    <!-- 页面次要js脚本 -->
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['upload','table'], function() {
+        var $ = layui.jquery,
+            upload = layui.upload,
+            table = layui.table;
+
+        var files = null;
+        //拖拽上传
+        upload.render({
+            elem: '#test10',
+            url: gpms.host + $('input[name="upDo"]').val(),
+            accept: 'file',
+            exts: 'xlsx|xls',
+            // data: {file_excel: files},
+            choose: function(obj) {
+                // files = $('.layui-upload-file').val();
+            },
+            done: function(res) {
+                // if (res.code == "1") {
+                if (res.code != "0") {
+                    layer.msg(res.msg,{ icon:5 })
+                    return;
+                }
+
+                if (res.data.length > 0) {
+                    $('.failCount').html('存在导入失败数据：<span class="layui-badge">' + res.data.length + '条</span>');
+                    //第一个实例
+                    table.render({
+                        elem: '#failList',
+                        id:'failList',
+                        toolbar: true,
+                        defaultToolbar: ['exports'],
+                        data:res.data,
+                        page: true,
+                        cols: [
+                            [ //表头
+                                // { type: "checkbox", width: 50, fixed: "left" },
+                                { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                                { field: 'stuNo', title: '学号', sort: true,minWidth: 150 },
+                                { field: 'stuName', title: '学生名',minWidth: 150 },
+                                { field: 'stuPassword', title: '密码',minWidth: 150 },
+                                { field: 'stuPhone', title: '手机',minWidth: 150 },
+                                { field: 'stuEmail', title: '邮箱', minWidth: 150 },
+                                {
+                                    field: 'stuGender',
+                                    title: '性别',
+                                    sort: true,
+                                    templet: function(d) {
+                                        // if (d.stuGender == '') return '无';
+                                        if (d.stuGender == '1') return '女';
+                                        else if (d.stuGender == '0') return '男';
+                                    }
+
+                                },
+                                { field: 'stuAddress', title: '住址', sort: true },
+                                {
+                                    field: 'stuState',
+                                    title: '状态',
+                                    templet: function(d) {
+                                        // if (d.stuGender == '') return '无';
+                                        if (d.stuState == '0') return '正常';
+                                        else if (d.stuState == '1') return '待审核';
+                                        else if (d.stuState == '2') return '封禁';
+                                        else if (d.stuState == '3') return '过期';
+                                        else if (d.stuState == '4') return '注销';
+                                    }
+                                },
+                                { field: 'stuStage', title: '届期', sort: true },
+                                { field: 'stuClassNo', title: '班级号', sort: true },
+                                { field: 'stuTeaNo', title: '导师号', sort: true },
+                                { field: 'stuMajCode', title: '专业号', sort: true },
+                                { field: 'stuDirCode', title: '方向号', sort: true },
+                                { field: 'stuStage', title: '学校号', sort: true,templet:function(d){return "1"} },
+
+
+
+                                // { title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center" }
+                            ]
+                        ]
+                    });
+
+
+                } else {
+                    $('.failCount').html('导入失败数据：<span class="layui-badge">' + 0 + '条</span>');
+                    // table.reload('failList',{
+                    //     data:null,
+                    // })
+                }
+                // }
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

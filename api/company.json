@@ -1,0 +1,57 @@
+{
+    "clearInfo":
+    {
+        "clearUrl": "api/clear.json"
+    },
+    "homeInfo":
+    {
+        "title": "首页",
+        "icon": "fa fa-home",
+        "href": "page/welcome-1.html?mpi=m-p-i-0"
+    },
+    "logoInfo":
+    {
+        "title": "GPMS",
+        "image": "images/logo.png",
+        "href": ""
+    },
+    "userInfo":
+    {
+        "userName": "",
+        "type": "企业端"
+    },
+    "menuInfo":
+    {
+        "currency":
+        {
+            "title": "实习管理",
+            "icon": "fa fa-address-book",
+            "child": [
+            {
+                "title": "首页",
+                "href": "page/welcome-1.html",
+                "icon": "fa fa-home",
+                "target": "_self"
+            },
+            {
+                "title": "企业信息",
+                "href": "",
+                "icon": "fa fa-user",
+                "target": "_self"
+
+            },
+            {
+                "title": "企业实习生",
+                "href": "page/studentInfoCompany.html",
+                "icon": "fa fa-graduation-cap",
+                "target": "_self"
+            },
+            {
+                "title": "实习评价",
+                "href": "page/.html",
+                "icon": "fa fa-pie-chart",
+                "target": "_self"
+            }]
+        }
+    }
+}

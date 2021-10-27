@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>专业项目管理</title>
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="icon" href="../images/logo-m.png">
+    <style>
+        .layui-btn:not(.layui-btn-lg):not(.layui-btn-sm):not(.layui-btn-xs) {
+        height: 34px;
+        line-height: 34px;
+        padding: 0 8px;
+    }
+        .layui-layer-content {
+    overflow: visible !important;
+}
+    </style>
+</head>
+
+<body>
+    <div id="majorBar" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false">
+            <div class="layui-form-item">
+                <label class="layui-form-label">专业代号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="majorNo" required lay-verify="required" placeholder="专业代号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">专业名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="majorName" required lay-verify="required" placeholder="专业名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="msign" placeholder="请输入备注" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <!--            <hr>
+            <div class="layui-form-item layui-form-text">
+                <button class=""></button>
+            </div> -->
+        </form>
+    </div>
+    <div id="directionBar" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false">
+            <div class="layui-form-item">
+                <label class="layui-form-label">方向代号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="directionNo" required lay-verify="required" placeholder="方向代号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">方向名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="directionName" required lay-verify="required" placeholder="方向名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="dsign" placeholder="请输入备注" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <!--            <hr>
+            <div class="layui-form-item layui-form-text">
+                <button class=""></button>
+            </div> -->
+        </form>
+    </div>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-fluid ">
+                <div class="layui-row layui-col-space20">
+                    <div class="layui-col-sm6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-app icon"></i>本校专业
+                                <button class="layui-btn newMajor" style="float:right;" id="newMajor">新建专业</button>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" lay-filter="majorList" id="majorList"></table>
+                                <script type="text/html" id="currentTableBar">
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary" lay-event="search">方向</button>
+                                    <button class="layui-btn layui-btn-xs download" lay-event="edit">编辑</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-danger delete" lay-event="delete">删除</button>
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6 right">
+                        <!--                         <div class="layui-card">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-find-fill icon"></i>
+                                <span class="majName"></span>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" lay-filter="directionList" id="directionList"></table>
+                                <script type="text/html" id="currentTableBar2">
+                                    <button class="layui-btn layui-btn-xs download" lay-event="edit">编辑</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-danger delete" lay-event="delete">删除</button>
+                                </script>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['table'], function() {
+        var $ = layui.jquery;
+        var table = layui.table,
+            form = layui.form;
+
+        table.render({
+            elem: '#majorList',
+            url: gpms.host + 'api/search/searchMajor',
+            id: "majorVisitor",
+            height: 466,
+            cols: [
+                [
+                    // { type: "checkbox", width: 50, fixed: "left" },
+                    { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                    { field: 'majCode', hide: true },
+                    { field: 'majName', title: '专业', sort: true },
+                    { field: 'majCode', title: '代号', },
+                    { field: 'majSign', title: '备注' },
+                    { title: '操作', width: 180, templet: '#currentTableBar', fixed: "right", align: "center" }
+                ]
+            ],
+            parseData: function(res) { //res 即为原始返回的数据
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            done: function(res, curr, count) {
+                // table.reload('directionList');
+                gpms.isLogin(res, function() {
+
+                });
+            },
+            cellMinWidth: 100,
+            // limits: [10, 15, 20, 25, 50, 100],
+            // limit: 10,
+            loading: true,
+            // page: true
+        });
+
+        table.on('tool(majorList)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'search') {
+
+                var html = '<div class="layui-card"><div class="layui-card-header"><i class="layui-icon layui-icon-find-fill icon"></i><span class="majName"></span><input type="hidden" class="MajCode"/><button class="layui-btn newDirection" style="float:right;" id="newDirection">新建方向</button></div><div class="layui-card-body"><table class="layui-table" lay-filter="directionList" id="directionList"></table><script type="text/html" id="currentTableBar2"><button class="layui-btn layui-btn-xs download" lay-event="edit">编辑</button><button class="layui-btn layui-btn-xs layui-btn-danger delete" lay-event="delete">删除</button><\/script></div></div>';
+                $('.right').html(html);
+                $('.majName').text("【 " + data.majName + " 】 的方向");
+                $('.MajCode').val(data.majCode)
+                var direTable = table.render({
+                    elem: '#directionList',
+                    // url: gpms.host + 'api/search/searchMajor',
+                    data: data.majorDirectionList,
+                    id: "directionList",
+                    height: 466,
+                    cols: [
+                        [
+                            // { type: "checkbox", width: 50, fixed: "left" },
+                            { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                            { field: 'dirName', title: '方向名', sort: true },
+                            { field: 'dirCode', title: '代号', },
+                            { field: 'dirSign', title: '备注' },
+                            { title: '操作', minWidth: 120, templet: '#currentTableBar2', fixed: "right", align: "center" }
+                        ]
+                    ],
+                    parseData: function(res) { //res 即为原始返回的数据
+                        return {
+                            "code": 0, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.total, //解析数据长度
+                            "data": res.data //解析数据列表
+                        };
+                    },
+                    done: function(res, curr, count) {
+                        gpms.isLogin(res, function() {
+
+                        });
+                    },
+                    cellMinWidth: 100,
+                    text:{
+                        none:'该专业暂无方向'
+                    },
+                    // limits: [10, 15, 20, 25, 50, 100],
+                    // limit: 10,
+                    loading: true,
+                    // page: true
+                });
+                table.on('tool(directionList)', function(obj) {
+                    var data = obj.data;
+                    if (obj.event === 'delete') {
+                        var open = layer.confirm('将删除【' + obj.data.dirName + '】，您确定吗', {
+                            title: '警告',
+                            icon: 0,
+                        }, function() {
+                            var datas = "dirCode=" + data.dirCode;
+                            update(gpms.host + "api/admin/removeDirection", datas);
+                            table.reload('directionList');
+                            // direTable.reload();
+                            layer.close(open);
+                        }, function() {
+
+                        })
+                    } else if (obj.event === "edit") {
+                        $('input[name=directionNo]').attr('disabled', 'disabled');
+                        $('input[name=directionNo]').addClass('layui-disabled');
+                        $('input[name=directionNo]').val(data.dirCode);
+                        $('input[name=directionName]').val(data.dirName);
+                        $('textarea[name=dsign]').val(data.dirSign);
+                        var open = layer.open({
+                            type: 1,
+                            title: '编辑【' + data.dirName + '】 方向',
+                            btn: ['提交', '取消'],
+                            content: $('#directionBar'),
+                            yes: function() {
+                                if ($('input[name=directionNo]').val() == '') {
+                                    layer.msg('方向代号不能留空', { icon: 5 });
+                                    return;
+                                }
+                                if ($('input[name=directionName]').val() == '') {
+                                    layer.msg('方向名不能留空', { icon: 5 });
+                                    return;
+                                }
+                                var data = "dirCode=" + $('input[name=directionNo]').val() + "&dirName=" + $('input[name=directionName]').val() + "&dirSign=" + $('textarea[name=dsign]').val();
+                                update(gpms.host + "api/admin/modifyDirection", data);
+                                table.reload('directionList');
+                                // direTable.reload();
+                                layer.close(open);
+                            },
+                            btn2: function() {
+
+                            }
+                        })
+                    }
+
+                });
+
+            } else if (obj.event === "delete") {
+                var open = layer.confirm('将删除【' + obj.data.majName + '】及其方向，您确定吗', {
+                    title: '警告',
+                    icon: 0,
+                }, function() {
+                    var data = "majCode=" + $('input[name=majorNo]').val();
+                    update(gpms.host + "api/admin/removeMajor", data);
+                    layer.close(open);
+                }, function() {
+
+                })
+            } else if (obj.event === "edit") {
+                $('input[name=majorNo]').attr('disabled', 'disabled');
+                $('input[name=majorNo]').addClass('layui-disabled');
+                $('input[name=majorNo]').val(data.majCode);
+                $('input[name=majorName]').val(data.majName);
+                $('textarea[name=msign]').val(data.majSign);
+                var open = layer.open({
+                    type: 1,
+                    title: '编辑【' + data.majName + '】专业',
+                    btn: ['提交', '取消'],
+                    content: $('#majorBar'),
+                    yes: function() {
+                        if ($('input[name=majorNo]').val() == '') {
+                            layer.msg('专业代号不能留空', { icon: 5 });
+                            return;
+                        }
+                        if ($('input[name=majorName]').val() == '') {
+                            layer.msg('专业名不能留空', { icon: 5 });
+                            return;
+                        }
+                        var data = "majCode=" + $('input[name=majorNo]').val() + "&majName=" + $('input[name=majorName]').val() + "&majSign=" + $('textarea[name=msign]').val();
+                        update(gpms.host + "api/admin/modifyMajor", data);
+                        layer.close(open);
+                    },
+                    btn2: function() {
+
+                    }
+                })
+            }
+        });
+        var index;
+
+        function update(url, data) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                data: data,
+                beforeSend: function(xhr) {
+                    index = layer.msg('加载中', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function(res) {
+                    if (res.code == "0") {
+                        layer.msg(res.msg, { icon: 1 })
+                    } else {
+                        layer.msg(res.msg, { icon: 5 })
+                    }
+                    table.reload('majorVisitor');
+                    table.reload('directionList');
+                },
+                error: function(xhr, status, error) {
+                    layer.msg('接口返回异常', { icon: 5 });
+                },
+                complete: function(xhr, status) {
+                    layer.close(index);
+                }
+            })
+        }
+
+
+
+        $('#newMajor').on('click', function() {
+            $('input[name=majorNo]').removeAttr('disabled');
+            $('input[name=majorNo]').removeClass('layui-disabled');
+            $('input[name=majorNo]').val('');
+            $('input[name=majorName]').val('');
+            $('textarea[name=msign]').val('');
+            form.render();
+            var open = layer.open({
+                type: 1,
+                title: '新建专业',
+                btn: ['提交', '取消'],
+                content: $('#majorBar'),
+                yes: function() {
+                    if ($('input[name=majorNo]').val() == '') {
+                        layer.msg('专业代号不能留空', { icon: 5 });
+                        return;
+                    }
+                    if ($('input[name=majorName]').val() == '') {
+                        layer.msg('专业名不能留空', { icon: 5 });
+                        return;
+                    }
+                    var data = "majCode=" + $('input[name=majorNo]').val() + "&majName=" + $('input[name=majorName]').val() + "&majSign=" + $('textarea[name=msign]').val();
+                    update(gpms.host + "api/admin/updateMajor", data);
+                    layer.close(open);
+                },
+                btn2: function() {
+
+                }
+            })
+        })
+
+        $('body').on('click', '#newDirection', function() {
+            $('input[name=directionNo]').removeAttr('disabled');
+            $('input[name=directionNo]').removeClass('layui-disabled');
+            $('input[name=directionNo]').val('');
+            $('input[name=directionName]').val('');
+            $('textarea[name=dsign]').val('');
+            var open = layer.open({
+                type: 1,
+                title: '新建方向',
+                btn: ['提交', '取消'],
+                content: $('#directionBar'),
+                yes: function() {
+                    if ($('input[name=directionNo]').val() == '') {
+                        layer.msg('方向代号不能留空', { icon: 5 });
+                        return;
+                    }
+                    if ($('input[name=directionName]').val() == '') {
+                        layer.msg('方向名不能留空', { icon: 5 });
+                        return;
+                    }
+                    var data = "dirCode=" + $('input[name=directionNo]').val() + "&dirName=" + $('input[name=directionName]').val() + "&dirSign=" + $('textarea[name=dsign]').val() + "&majCode=" + $('.MajCode').val();
+                    update(gpms.host + "api/admin/updateDirection", data);
+                    table.reload('directionVisitor');
+                    layer.close(open);
+                },
+                btn2: function() {
+
+                }
+            })
+        })
+
+        function setSelecter(ele, text, data) {
+            ele.html('<option value="">' + text + '</option>');
+            $.each(data, function(index, item) {
+                ele.append('<option value="' + item.proId + '">' + item.proName + '</option>');
+            });
+            form.render('select');
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>企业端 学生信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <blockquote class="layui-elem-quote stageText">本届企业实习生</blockquote>
+            <fieldset class="layui-elem-field layuimini-search">
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">年份</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="key" autocomplete="off" class="layui-input" lay-verify="required|number">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</button>
+                                <button type="button" class="layui-btn layui-btn-primary data-search-btn2">本年</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            <script type="text/html" id="currentTableBar">
+                {{#  if(d.scState ==0){ }}
+                <button class="layui-btn layui-btn-xs" lay-event="apply">同意</button>
+                <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="reject">拒绝</button>
+                {{# }else if(d.scState ==1){ }}
+                <button class="layui-btn layui-btn-xs layui-disabled" lay-event="" disabled="">已同意</button>
+                <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="reject">拒绝</button>
+                {{# }else if(d.scState ==2){ }}
+                <button class="layui-btn layui-btn-xs" lay-event="apply">同意</button>
+                <button class="layui-btn layui-btn-xs layui-btn-danger layui-disabled" lay-event="" disabled="">已拒绝</button>
+                {{#  } }}
+            </script>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script src="../js/excel.min.js"></script>
+    <script>
+    layui.use(['form', 'table'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            excel = layui.excel;
+        var nowYear = new Date().getFullYear();
+        var nowMonth = new Date().getMonth();
+        if (nowMonth > 7) {
+            nowYear = new Date().getFullYear() + 1;
+        }
+
+        $('.data-search-btn2').on('click', function() {
+            table.reload('currentTableId', {
+                url: gpms.host + 'api/com/searchStudentForComByKey',
+                where: {
+                    stage: nowYear
+                }
+            });
+            $('.stageText').text(nowYear + "届实习学生名单");
+        });
+
+        form.on('submit(data-search-btn)', function(data) {
+            table.reload('currentTableId', {
+                url: gpms.host + 'api/com/searchStudentForComByKey',
+                where: {
+                    stage: data.field.key
+                }
+            });
+            $('.stageText').text(data.field.key + "届实习学生名单")
+            return false;
+        });
+
+        table.render({
+            title: "学生信息",
+            elem: '#currentTableId',
+            id: 'currentTableId',
+            where: { stage: nowYear },
+            url: gpms.host + 'api/com/searchStudentForComByKey',
+            cols: [
+                [
+                    { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                    // { type: "checkbox", width: 50, fixed: "left" }
+                    { field: 'stuStage', title: '实习届期', sort: true, align: 'center' },
+                    { field: 'stuNo', title: '学号', sort: true },
+                    { field: 'stuName', title: '实习生' },
+                    // { field: 'stuPassword', title: '密码' },
+                    { field: 'stuPhone', title: '手机' },
+
+                    { field: 'stuEmail', title: '邮箱', minWidth: 150 },
+                    {
+                        field: 'stuGender',
+                        title: '性别',
+                        sort: true,
+                        templet: function(d) {
+                            // if (d.stuGender == '') return '无';
+                            if (d.stuGender == '1') return '女';
+                            else if (d.stuGender == '0') return '男';
+                        }
+
+                    },
+                    { field: 'stuAddress', title: '住址', sort: true },
+                    // {
+                    //     field: 'stuState',
+                    //     title: '申请状态',
+                    //     templet: function(d) {
+                    //         // if (d.stuGender == '') return '无';
+                    //         if (d.stuState == '0') return '正常';
+                    //         else if (d.stuState == '1') return '待审核';
+                    //         else if (d.stuState == '2') return '封禁';
+                    //         else if (d.stuState == '3') return '过期';
+                    //         else if (d.stuState == '4') return '注销';
+                    //     }
+                    // },
+                    // { field: '', title: '实习状态', sort: true },
+                    // { field: '', title: '评价状态', sort: true },
+                    { title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center" }
+                ]
+            ],
+            parseData: function(res) { //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": 1000, //解析数据长度
+                    "data": res.data, //解析数据列表
+                };
+            },
+            done: function(res, curr, count) {
+                gpms.isLogin(res);
+
+                // res.data.unshift({ sdId: '序号', stuNo: '学号', stuName: '学生名', stuPassword: '密码', stuPhone: '手机', stuEmail: '邮箱',stuGender: '性别',stuAddress: '地址',stuState: '状态', });
+                // excel.exportExcel({
+                //     sheet1: res.data
+                // }, (data.field.key==""?'无条件':'条件【 ' + data.field.key + ' 】') +'.xlsx', 'xlsx');
+            },
+            cellMinWidth: 100,
+            text: { none: "无" + $('input[name="key"]').val() + "届实习生或者实习申请" }
+            // limits: [10, 15, 20, 25, 50, 100],
+            // limit: 10,
+            // page: true
+        });
+
+        //监听工具条
+        table.on('tool(currentTableFilter)', function(obj) {
+            var data = obj.data;
+            console.log(obj)
+            var _this = $(this);
+            if (obj.event === 'apply') {
+
+                $.ajax({
+                    url: gpms.host + "api/com/applyJoinCom",
+                    type: "GET",
+                    xhrFields: { withCredentials: true },
+                    data: "stuNo=" + data.stuNo,
+                    crossDomain: true,
+                    beforeSend: function(xhr) {
+                        index = layer.msg('加载中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        _this.addClass('layui-disabled');
+                        _this.text("已同意");
+                        _this.attr('disabled', 'disabled');
+                        table.reload('currentTableId');
+                    },
+                    error: function(xhr, status, error) {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+
+                        layer.close(index);
+                    }
+                })
+            } else if (obj.event === 'reject') {
+                $.ajax({
+                    url: gpms.host + "api/com/refuseJoinCom",
+                    type: "GET",
+                    data: "stuNo=" + data.stuNo,
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    beforeSend: function(xhr) {
+                        index = layer.msg('加载中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        _this.addClass('layui-disabled');
+                        _this.text("已拒绝");
+                        _this.addClass('layui-btn-danger')
+                        _this.attr('disabled', 'disabled');
+                        table.reload('currentTableId');
+                    },
+                    error: function(xhr, status, error) {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            }
+
+        });
+    });
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

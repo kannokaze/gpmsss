@@ -1,0 +1,89 @@
+ {
+     "clearInfo":
+     {
+         "clearUrl": "api/clear.json"
+     },
+     "homeInfo":
+     {
+         "title": "首页",
+         "icon": "fa fa-home",
+         "href": "page/welcome-tea.html?mpi=m-p-i-0"
+     },
+     "logoInfo":
+     {
+         "title": "GPMS",
+         "image": "images/logo.png",
+         "href": ""
+     },
+     "userInfo":
+     {
+         "userName": "",
+         "type": "学生端"
+     },
+     "menuInfo":
+     {
+         "currency":
+         {
+             "title": "实习管理",
+             "icon": "fa fa-address-book",
+             "child": [
+             {
+                 "title": "首页",
+                 "href": "page/welcome-1.html",
+                 "icon": "fa fa-home",
+                 "target": "_self"
+             },
+             {
+                 "title": "学生管理",
+                 "href": "",
+                 "icon": "fa fa-group",
+                 "target": "_self",
+                 "child": [
+                 {
+                     "title": "学生管理",
+                     "href": "page/studentInfoTeacher.html",
+                     "icon": "fa fa-tachometer",
+                     "target": "_self"
+                 }]
+             },
+             {
+                 "title": "个人信息",
+                 "href": "teacher-setting",
+                 "icon": "fa fa-user",
+                 "target": "_self",
+             },
+             {
+                 "title": "实习管理",
+                 "href": "page/table.html",
+                 "icon": "fa fa-gears",
+                 "target": "_self",
+                 "child": [
+                 {
+                     "title": "实习控制",
+                     "href": "page/timeSetting.html",
+                     "icon": "fa fa-gear",
+                     "target": "_self"
+                 },
+                 {
+                     "title": "实习信息",
+                     "href": "page/gradeTeacher.html",
+                     "icon": "fa fa-bookmark",
+                     "target": "_self"
+                 }]
+             },
+             {
+                 "title": "资料管理",
+                 "href": "page/table.html",
+                 "icon": "fa fa-folder-o",
+                 "target": "_self",
+                 "child": [
+                 {
+                     "title": "文档模板",
+                     "href": "page/uploadExampleFiles.html",
+                     "icon": "fa fa-file-text",
+                     "target": "_self"
+                 }]
+             }]
+         }
+     }
+ }

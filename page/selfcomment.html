@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>自我鉴定</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <!--     <link rel="stylesheet" href="../lib/lay-module/step-lay/step.css" media="all"> -->
+    <style>
+        /* .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;} */
+        .layui-disabled{}
+        .listTimeBar{ text-align: right; }
+    .layui-card {
+        border: 1px solid #f2f2f2;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <input type="hidden" class="AstudentNo" name="AstudentNo">
+    <input type="hidden" class="AstudentName" name="AstudentName">
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <!-- 实习生自我鉴定 -->
+            <blockquote class="layui-elem-quote ">实习生自我鉴定
+                <div class="listTimeBar layui-inline" style="float: right;"></div>
+            </blockquote>
+            <div class="layui-card" style="width: 500px;">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-list icon"></i>自我鉴定
+                    <!-- <button class="layui-btn" style="float:right;" id="new">新建日志</button> -->
+                </div>
+                <div class="layui-card-body">
+                    <!-- 内容标题 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">内容</label>
+                        <div class="layui-input-block">
+                            <textarea name="selfcomment" placeholder="请对实习情况进行自我评定哦" class="layui-textarea layui-disabled" disabled maxlength="255"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block buttonGroup">
+                            <!-- <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button> -->
+                            <!-- <button type="reset" class="layui-btn layui-btn-primary">修改</button> -->
+                            <button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['form', 'step', 'element', 'table', 'laydate'], function() {
+        var $ = layui.$,
+            form = layui.form,
+            step = layui.step,
+            laydate = layui.laydate,
+            table = layui.table,
+            element = layui.element;
+
+        var model;
+        var isTime = getConfigDeadline($('.listTimeBar'));
+
+
+
+        // 页面开启查询有无实习内容相关
+        function getContentProjectProgress() {
+            var index;
+
+
+            $.ajax({
+                url: gpms.host + "api/search/internshipInfo",
+                type: "GET",
+                // data: "stuNo=" + $('.AstudentNo').val(),
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                beforeSend: function(xhr) {
+                    index = layer.msg('加载中', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function(res) {
+                    gpms.isLogin(res, function() {
+                        if (res.data.length == 0) {
+                            return;
+                        }
+                        if (res.data[0].lcSelfcomment == null) {
+                            $('.modify').text("开启添加");
+                            model = "create";
+                        } else {
+                            // 将实习内容写入，页面初始化
+                            // $('.contname').text(res.data[0].lcName);
+                            $('textarea[name=selfcomment]').val(res.data[0].lcSelfcomment)
+
+
+                        }
+                        console.log(res.data[0].lcSelfComment);
+                    });
+                },
+                error: function() {
+                    layer.msg('接口返回异常', { icon: 5 });
+                },
+                complete: function(xhr, status) {
+                    layer.close(index);
+                }
+            })
+
+        }
+
+        form.on('submit(plus)', function(data) {
+            var btnText = "开启修改";
+            if (model == "create") {
+                btn = "开启添加";
+            }
+            // ui初始化
+            var mod = '<button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>';
+            $('textarea[name="selfcomment"]').attr('disabled', 'disabled');
+            $('textarea[name="selfcomment"]').addClass('layui-disabled');
+            $('.buttonGroup').html(mod);
+            form.render();
+
+            if (model == "create") {
+                // 提交新建
+                $.ajax({
+                    url: gpms.host + "api/stu/createSelfcomment",
+                    type: "POST",
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    data: "Selfcomment=" + $('textarea[name="selfcomment"]').val(),
+                    beforeSend: function(xhr) {
+                        index = layer.msg('提交中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        layer.msg('提交成功', { icon: 1 });
+
+                    },
+                    error: function() {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            } else {
+                // 提交更改
+                $.ajax({
+                    url: gpms.host + "api/stu/upSelfcomment",
+                    type: "POST",
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    data: "Selfcomment=" + $('textarea[name="selfcomment"]').val(),
+                    beforeSend: function(xhr) {
+                        index = layer.msg('提交中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        layer.msg('提交成功', { icon: 1 });
+
+                    },
+                    error: function() {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            }
+
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        // 获取项目
+        getContentProjectProgress();
+
+
+        $('body').on('click', '.modify', function() {
+            var sub = '<button type="submit" class="layui-btn" lay-submit="" lay-filter="plus">立即提交</button>',
+                quit = '<button type="button" class="layui-btn layui-btn-primary quit">取消</button>';
+            $('.buttonGroup').html(sub + quit);
+
+            $('textarea[name="selfcomment"]').removeAttr('disabled');
+            $('textarea[name="selfcomment"]').removeClass('layui-disabled');
+            $('input[name="name"]').focus();
+
+        }).on('click', '.quit', function() {
+            var mod = '<button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>';
+
+            $('textarea[name="selfcomment"]').attr('disabled', 'disabled');
+            $('textarea[name="selfcomment"]').addClass('layui-disabled');
+            $('.buttonGroup').html(mod);
+            form.render();
+        })
+
+    })
+    </script>
+</body>
+
+</html>

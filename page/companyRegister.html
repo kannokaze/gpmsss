@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>邀请您入驻gpms系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <!--     <link rel="stylesheet" href="../lib/lay-module/step-lay/step.css" media="all"> -->
+    <style>
+        .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;}
+    </style>
+</head>
+
+<body>
+    <div class="dddddd" style="display: none;">
+        <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公司ID:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux cid"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公司全称:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux cname"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系人姓名:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux cmanager"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公司地址:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux cadd"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公司行业:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux ctrad"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系电话:</label>
+                    <div class="layui-input-block">
+                        <div class="layui-form-mid layui-word-aux cphone"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">您的邮箱:</label>
+                <div class="layui-input-block">
+                    <div class="layui-form-mid layui-word-aux cemail">
+                        <span style="font-size: 18px;color: #333;"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-fluid">
+                <div class="layui-card">
+                    <div class="layui-card-body" style="padding-top: 40px;">
+                        <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                            <div carousel-item>
+                                <!-- 填写注册信息 -->
+                                <div>
+                                    <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">公司ID:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comAccount" placeholder="登录用ID（唯一）" class="layui-input" required lay-verify="required|isExist" />
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">登录密码:</label>
+                                            <div class="layui-input-block ">
+                                                <input type="password" name="comPassword" placeholder="密码" value="" class="layui-input" required lay-verify="required|pwd">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">再次确认:</label>
+                                            <div class="layui-input-block">
+                                                <input type="password" name="crpwd" placeholder="确认密码" value="" class="layui-input" lay-verify="required|repwd" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">联系邮箱:</label>
+                                            <div class="layui-input-block">
+                                                <input type="email" name="comEmail" placeholder="必须准确无误，用于通知" value="" class="layui-input" lay-verify="required|email" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button class="layui-btn" lay-submit lay-filter="formStep">
+                                                    &emsp;下一步&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 填写公司信息 -->
+                                <div>
+                                    <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">联系人姓名:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comManager" placeholder="实习工作负责人" value="" class="layui-input" lay-verify="required" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">公司全称:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comName" placeholder="公司名" value="" class="layui-input" lay-verify="required" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">公司地址:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comAddress" placeholder="公司地址" value="" class="layui-input" lay-verify="" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">公司行业:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comTrade" placeholder="公司行业" value="" class="layui-input" lay-verify="" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label required">联系电话:</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="comPhone" placeholder="联系电话" value="" class="layui-input" lay-verify="required|phone" required>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                                <button class="layui-btn" lay-submit lay-filter="formStep1">
+                                                    &emsp;下一步&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 确认信息 -->
+                                <div>
+                                    <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                        <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">公司ID:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux cid"></div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">公司全称:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux cname"></div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">联系人姓名:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux cmanager"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">公司地址:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux cadd"></div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">公司行业:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux ctrad"></div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">联系电话:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux cphone"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">您的邮箱:</label>
+                                            <div class="layui-input-block">
+                                                <div class="layui-form-mid layui-word-aux cemail">
+                                                    <span style="font-size: 18px;color: #333;"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 验证邮箱 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">邮箱验证:</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="code" placeholder="验证码" value="" class="layui-input" lay-verify="required|isTrue" required>
+                                            </div>
+                                            <div class="lay-input-span">
+                                                <button type="button" class="layui-btn getCode">获取</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                                <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                                    &emsp;确认注册&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- 提交反馈页 -->
+                                <div>
+                                    <div style="text-align: center;margin-top: 90px;">
+                                        <i class="layui-icon layui-circle" style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                                        <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                            注册成功
+                                        </div>
+                                        <div style="font-size: 14px;color: #666;margin-top: 20px;">等待管理员审核</div>
+                                    </div>
+                                    <div style="text-align: center;margin-top: 50px;">
+                                        <button class="layui-btn layui-btn-primary info">查看账户信息</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div style="color: #666;margin-top: 30px;margin-bottom: 30px;padding-left: 30px;">
+                            <blockquote class="layui-elem-quote ">
+                                <h3>说明</h3>
+                                <h4>（1）带<i style="color:red;font-size: 20px;line-height:14px;vertical-align: center">*</i>的为必填项</h4>
+                                <p>（2）填写的邮箱将用于通知和验证等用途，请认真填写！</p>
+                                <p>（3）如果公司ID已经被注册，请联系管理员，邮箱：1131429439@qq.com</p>
+                                <p>（4）确认信息时有什么问题可以返回上一步修改</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script src="../js/md5.js"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['form', 'step'], function() {
+        var $ = layui.$,
+            form = layui.form,
+            step = layui.step;
+
+        var registData = new Object(),
+            registData1 = null,
+            registData2 = null;
+
+        var code = null;
+        var timeClock = null;
+        // 获取邮箱验证码
+        $('.getCode').on('click', function() {
+            code = Math.random().toString(36).substr(2, 4);
+            // console.log(code);
+            $.ajax({
+                url: gpms.host + "api/userLogin/verifiyMail",
+                type: "POST",
+                data: "code=" + code + "&email=" + $('input[name="comEmail"]').val(),
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                beforeSend: function(xhr) {
+                    $('.getCode').text("邮箱发送中...");
+                    $('.getCode').attr('disabled', 'disabled');
+                    $('.getCode').addClass('layui-btn-disabled');
+                },
+                success: function() {
+
+                },
+                error: function() {
+                    layer.alert('获取失败，请检查网络后，重新获取', {
+                        title: '提示',
+                        skin: 'layui-layer-molv',
+                        closeBtn: 0,
+                        icon: 5,
+                        btn: ['重新获取']
+                    }, function() {
+                        clearInterval(timeClock);
+                        $('.getCode').trigger('click');
+                    });
+
+                },
+                complete: function(xhr, status) {
+                    var time = 60;
+                    // $('.getCode').addClass('layui-btn-disabled');
+                    $('.getCode').text(time + "s后重新获取");
+                    // $('.getCode').attr('disabled', 'disabled');
+                    timeClock = setInterval(function() {
+                        time--;
+                        $('.getCode').text(time + "s后重新获取");
+                        if (time <= 0) {
+                            $('.getCode').removeClass('layui-btn-disabled');
+                            $('.getCode').removeAttr('disabled');
+                            $('.getCode').text("获取");
+                            clearInterval(timeClock);
+                        }
+                    }, 1000);
+
+                }
+            })
+        })
+
+        // 查看信息
+        $('.info').on('click', function() {
+            layer.alert($('.dddddd'), {
+                title: "账户信息",
+                // skin: 'layui-layer-molv', //样式类名
+                closeBtn: 0
+            });
+        });
+
+
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '480px',
+            stepItems: [{
+                    title: '填写注册信息'
+                },
+                {
+                    title: '完善企业信息'
+                },
+                {
+                    title: '确认账户信息'
+                }, {
+                    title: '完成'
+                }
+            ]
+        });
+
+
+        // 表单验证
+        form.verify({
+            pwd: [/(.+){6,12}$/, '密码必须6到12位'],
+            content: function(value) {
+                layedit.sync(editIndex);
+            },
+            repwd: function(value) {
+                if ($('input[name=comPassword]').val() !== value)
+                    return '两次密码输入不一致！';
+            },
+            isExist: function(value) {
+                var CID = false;
+                $.ajax({
+                    url: gpms.host + "api/userLogin/ComIsEx",
+                    type: "GET",
+                    data: "comAccount=" + $('input[name=comAccount]').val(),
+                    async: false,
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    success: function(result) {
+                        if (result.msg === "存在") {
+                            CID = true;
+                        } else {
+                            CID = false;
+                        }
+                    },
+
+                });
+
+                if (CID) {
+                    return '公司ID已存在';
+                }
+
+            },
+            isTrue: function(value) {
+                if (code == null) {
+                    return "你都还没获取验证码！"
+                }
+
+                if (code != $("input[name='code']").val()) {
+                    return "验证码不正确！";
+                }
+            }
+        })
+
+
+        form.on('submit(formStep)', function(data) {
+            step.next('#stepForm');
+            registData1 = data.field;
+            return false;
+        });
+
+
+        form.on('submit(formStep1)', function(data) {
+            step.next('#stepForm');
+            registData2 = data.field;
+
+            $.extend(registData1, registData2);
+
+            $('.cid').text(registData1.comAccount);
+            $('.cname').text(registData1.comName);
+            $('.cadd').text(registData1.comAddress);
+            $('.cphone').text(registData1.comPhone);
+            $('.ctrad').text(registData1.comTrade);
+            $('.cemail>span').text(registData1.comEmail);
+            $('.cmanager').text(registData1.comManager);
+            console.log(registData1)
+
+            // 邮箱
+            return false;
+        });
+
+
+
+        // 提交数据
+        form.on('submit(formStep2)', function(data) {
+
+            // 合并数据
+            $.extend(registData, registData1);
+            var s = registData.comPassword;
+            registData.comPassword = hex_md5(s);
+            // console.log($("input[name='code']").val())
+            // 提交数据
+            if (code == $("input[name='code']").val()) {
+                $.ajax({
+                    url: gpms.host + "api/userLogin/register",
+                    type: "POST",
+                    data: registData,
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    success: function(res) {
+                        step.next('#stepForm');
+                    },
+                    error: function() {
+                        layer.msg('注册错误', { icon: 5 })
+                    },
+                    complete: function(xhr, status) {
+
+                    }
+                })
+            }
+
+
+            return false;
+        });
+
+
+
+        // 上一步
+        $('.pre').click(function() {
+            step.pre('#stepForm');
+        });
+
+        // 下一步
+        $('.next').click(function() {
+            step.next('#stepForm');
+        });
+    })
+    </script>
+</body>
+
+</html>

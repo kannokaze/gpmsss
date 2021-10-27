@@ -1,0 +1,103 @@
+{
+    "clearInfo":
+    {
+        "clearUrl": "api/clear.json"
+    },
+    "homeInfo":
+    {
+        "title": "首页",
+        "icon": "fa fa-home",
+        "href": "page/welcome-1.html?mpi=m-p-i-0"
+    },
+    "logoInfo":
+    {
+        "title": "GPMS",
+        "image": "images/logo.png",
+        "href": ""
+    },
+    "userInfo":
+    {
+        "userName":"",
+        "type":"学生端"
+    },
+    "menuInfo":
+    {
+        "currency":
+        {
+            "title": "实习管理",
+            "icon": "fa fa-address-book",
+            "child": [
+            {
+                "title": "首页",
+                "href": "page/welcome-1.html",
+                "icon": "fa fa-home",
+                "target": "_self"
+            },
+            {
+                "title": "实习信息",
+                "href": "",
+                "icon": "fa fa-graduation-cap",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "实习信息管理",
+                    "href": "page/internship.html",
+                    "icon": "fa fa-coffee",
+                    "target": "_self"
+                },
+                {
+                    "title": "日志管理",
+                    "href": "page/editor.html",
+                    "icon": "fa fa-clipboard",
+                    "target": "_self"
+                },
+                {
+                    "title": "评价与成绩",
+                    "href": "page/achievement.html",
+                    "icon": "fa fa-pie-chart",
+                    "target": "_self"
+                }]
+            },
+            {
+                "title": "个人信息",
+                "href": "page/student-setting.html",
+                "icon": "fa fa-user",
+                "target": "_self"
+
+            },
+            {
+                "title": "实习企业",
+                "href": "page/companyInfo.html",
+                "icon": "fa fa-briefcase",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "企业信息",
+                    "href": "page/companyInfo.html",
+                    "icon": "fa fa-building",
+                    "target": "_self"
+                }]
+            },
+            {
+                "title": "资料文档",
+                "href": "page/table.html",
+                "icon": "fa fa-folder-o",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "接受函上传",
+                    "href": "page/upload.html",
+                    "icon": "fa fa-upload",
+                    "target": "_self"
+                },
+                {
+                    "title": "文档下载",
+                    "href": "page/download.html",
+                    "icon": "fa fa-download",
+                    "target": "_self"
+                }]
+            }]
+        }
+
+    }
+}

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>实习内容</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <!--     <link rel="stylesheet" href="../lib/lay-module/step-lay/step.css" media="all"> -->
+    <style>
+        /* .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;} */
+        .layui-disabled{}
+        .listTimeBar{ text-align: right; }
+    .layui-card {
+        border: 1px solid #f2f2f2;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="PPProjectBar" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false" autocomplete="off">
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">项目名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="projectName" required lay-verify="required|number" placeholder="项目名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">简介</label>
+                    <div class="layui-input-inline">
+                        <textarea name="projectSign" placeholder="请输入评价" class="layui-textarea layui-form-text"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">实习企业</label>
+                    <div class="layui-input-inline">
+                        <select name="companySelect" lay-verify="" class="companySelect" lay-filter="companySelect">
+                            <option value="">请选择实习企业</option>
+                            <!-- <option value="010">北京</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开始时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="projectStart" class="layui-input" id="test1" placeholder="选择时间" lay-verify="required" lay-reqtext="请选择时间！" lay-key="1">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">结束时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="projectEnd" class="layui-input" id="test2" placeholder="选择时间" lay-verify="required" lay-reqtext="请选择时间！" lay-key="2">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="TTTeam" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false" autocomplete="off">
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">团队代号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="TeamCode" required lay-verify="required|number" placeholder="团队代号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">团队名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="TeamName" required lay-verify="required|number" placeholder="团队名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">项目</label>
+                    <div class="layui-input-inline">
+                        <select name="projectSelect2" lay-verify="" class="companySelect" lay-filter="companySelect">
+                            <option value="">请选择实习项目</option>
+                            <!-- <option value="010">北京</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">简介</label>
+                    <div class="layui-input-inline">
+                        <textarea name="TeamSign" placeholder="请输入评价" class="layui-textarea layui-form-text"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="TTTeamMember" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false" autocomplete="off">
+            <div class="layui-form-item">
+                <label class="layui-form-label">成员名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="TeamMemName" required lay-verify="required|number" placeholder="成员名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">职责 </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="TeamMemDuty" required lay-verify="required|number" placeholder="职责" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="PPProgressBar" style="display:none;padding: 15px;">
+        <form class="layui-form" action="" onsubmit="return false" autocomplete="off">
+            <div class="layui-form-item">
+                <label class="layui-form-label">进展名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ProgressName" required lay-verify="required|number" placeholder="进展名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">职责</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ProgressDuty" required lay-verify="required|number" placeholder="职责" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ProgressStart" class="layui-input" id="test3" placeholder="选择时间" lay-verify="required" lay-reqtext="请选择开始时间！" lay-key="3">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ProgressEnd" class="layui-input" id="test4" placeholder="选择时间" lay-verify="required" lay-reqtext="请选择结束时间！" lay-key="4">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <!-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <form class="layui-form internshipForm" action="#" method="post">
+                <blockquote class="layui-elem-quote">实习内容
+                    <div class="listTimeBar layui-inline" style="float: right;"></div>
+                </blockquote>
+                <div class="layui-fluid ">
+                    <div class="layui-row layui-col-space20">
+                        <div class="layui-col-sm6">
+                            <div class="layui-row ">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-list icon"></i>实习内容
+                                        <!-- <button class="layui-btn" style="float:right;" id="new">新建日志</button> -->
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <!-- 内容标题 -->
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">实习内容</label>
+                                            <div class="layui-input-block">
+                                                <input type="hidden" name="ID">
+                                                <input type="text" name="name" required lay-verify="required" placeholder="请输入实习内容主题" autocomplete="off" class="layui-input layui-disabled" disabled lay-reqtext="还没添加实习内容！">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item layui-form-text">
+                                            <label class="layui-form-label">内容描述</label>
+                                            <div class="layui-input-block">
+                                                <textarea name="content" placeholder="请大概地描述实习的工作内容" class="layui-textarea layui-disabled" disabled maxlength="255"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block buttonGroup">
+                                                <!-- <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button> -->
+                                                <!-- <button type="reset" class="layui-btn layui-btn-primary">修改</button> -->
+                                                <button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row" style="margin-top: 20px;">
+                                <!-- 实习项目 -->
+                                <div class="layui-card">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-list icon"></i>实习项目
+                                        <!-- <button class="layui-btn" style="float:right;" id="new">新建日志</button> -->
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <div class="layui-form-item">
+                                            <button type="button" class="layui-btn layui-btn-primary addProject" lay-filter="addProject" lay-submit=""><i class="fa fa-plus"></i>添加项目信息</button>
+                                            <button type="button" class="layui-btn layui-btn-primary addTeam" lay-filter="addTeam" lay-submit=""><i class="fa fa-plus"></i>添加项目团队</button>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <!-- table -->
+                                            <!-- <div class="layui-word-aux nothing"><i class="fa fa-arrow-up"></i>你没有提交信息哦，赶紧点击上面的按钮吧！</div> -->
+                                        </div>
+                                        <table class="layui-table " id="projectTable" lay-filter="projectTable"></table>
+                                        <script type="text/html" id="currentTableBar">
+                                            <div class="layui-btn-group">
+                                            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                                            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+                                        </div>
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm6 right">
+                            <div class="layui-row">
+                                <!-- 实习团队 -->
+                                <div class="layui-card">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-list icon"></i>项目团队成员
+                                        <!-- <button class="layui-btn" style="float:right;" id="new">新建日志</button> -->
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <select name="teamSelect" lay-verify="" class="teamSelect" lay-filter="teamSelect">
+                                                    <option value="">请选择团队</option>
+                                                    <!-- <option value="010">北京</option> -->
+                                                </select>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button type="button" class="layui-btn layui-btn-primary addTeamMember" lay-filter="addTeamMember" lay-submit=""><i class="fa fa-plus"></i>添加团队成员</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item teamBar">
+                                            <!-- <div class="layui-word-aux nothing"><i class="fa fa-arrow-up"></i>你没有提交信息哦，赶紧点击上面的按钮吧！</div> -->
+                                            <!-- table -->
+                                            <table class="layui-table" id="progressTable" lay-filter="progressTable"></table>
+                                            <script type="text/html" id="currentTableBar">
+                                                <div class="layui-btn-group">
+                                                    <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                                                    <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+                                                </div>
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row" style="margin-top: 20px;">
+                                <!-- 实习进展 -->
+                                <div class="layui-card">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-list icon"></i>实习进展
+                                        <!-- <button class="layui-btn" style="float:right;" id="new">新建日志</button> -->
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <select name="progressSelect" lay-verify="" class="progressSelect" lay-filter="progressSelect">
+                                                    <option value="">请选择项目</option>
+                                                    <!-- <option value="010">北京</option> -->
+                                                </select>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <button type="button" class="layui-btn layui-btn-primary addProgress" lay-filter="addProgress" lay-submit=""><i class="fa fa-plus"></i>添加进展</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item ProgressBar">
+                                            <!-- <div class="layui-word-aux nothing"><i class="fa fa-arrow-up"></i>你没有提交信息哦，赶紧点击上面的按钮吧！</div> -->
+                                            <!-- table -->
+                                            <table class="layui-table" id="progressTable" lay-filter="progressTable"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                 <div class="layui-form-item">
+                    <button type="button" class="layui-btn layui-btn-primary addContent" lay-submit lay-filter="addContent"><i class="fa fa-plus"></i>添加实习内容</button>
+                </div> -->
+            </form>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['form', 'step', 'element', 'table', 'laydate'], function() {
+        var $ = layui.$,
+            form = layui.form,
+            step = layui.step,
+            laydate = layui.laydate,
+            table = layui.table,
+            element = layui.element;
+
+        var ProjectStrat;
+        var start = laydate.render({
+            elem: '#test1',
+            theme: 'molv',
+            format: 'yyyy-MM-dd',
+            trigger: 'click',
+            done: function(value, date, endDate) {
+                end.config.min = {
+                    year: date.year,
+                    month: date.month - 1,
+                    date: date.date,
+                    hours: date.hours,
+                    minutes: date.minutes,
+                    seconds: date.seconds
+                };
+                // 作为 结束选择 的 开始时间
+                end.config.value = value;
+
+                ProjectStrat = new Date(value).getTime();
+
+            }
+        });
+
+        var ProjectEnd;
+        var end = laydate.render({
+            elem: '#test2',
+            theme: 'molv',
+            format: 'yyyy-MM-dd',
+            trigger: 'click',
+            done: function(value, date, endDate) {
+                start.config.max = {
+                    year: date.year,
+                    month: date.month - 1,
+                    date: date.date,
+                    hours: date.hours,
+                    minutes: date.minutes,
+                    seconds: date.seconds
+                };
+                start.config.value = value;
+
+                ProjectEnd = new Date(value).getTime();
+            }
+        });
+
+        var ProgressStart;
+        var start2 = laydate.render({
+            elem: '#test3',
+            theme: 'molv',
+            format: 'yyyy-MM-dd',
+            trigger: 'click',
+            done: function(value, date, endDate) {
+                end2.config.min = {
+                    year: date.year,
+                    month: date.month - 1,
+                    date: date.date,
+                    hours: date.hours,
+                    minutes: date.minutes,
+                    seconds: date.seconds
+                };
+                // 作为 结束选择 的 开始时间
+                end.config.value = value;
+
+                ProgressStart = new Date(value).getTime();
+            }
+        });
+
+        var ProgressEnd;
+        var end2 = laydate.render({
+            elem: '#test4',
+            theme: 'molv',
+            format: 'yyyy-MM-dd',
+            trigger: 'click',
+            done: function(value, date, endDate) {
+                start2.config.max = {
+                    year: date.year,
+                    month: date.month - 1,
+                    date: date.date,
+                    hours: date.hours,
+                    minutes: date.minutes,
+                    seconds: date.seconds
+                };
+                start.config.value = value;
+
+                ProgressEnd = new Date(value).getTime();
+            }
+        });
+        // 重新渲染
+        laydate.render(start);
+        laydate.render(end);
+        laydate.render(start2);
+        laydate.render(end2);
+
+        var model;
+        var isTime = getConfigDeadline($('.listTimeBar'));
+
+        $.ajax({
+            url: gpms.host + "api/stu/myCompany",
+            type: "GET",
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            beforeSend: function(xhr) {
+                index = layer.msg('加载中', {
+                    icon: 16,
+                    shade: 0.01
+                });
+            },
+            success: function(res) {
+                setCompanySelecter($('select[name="companySelect"]'), '请选择实习企业', res.data);
+            },
+            error: function(xhr, status, error) {
+                layer.msg('接口返回异常', { icon: 5 });
+            },
+            complete: function(xhr, status) {
+                layer.close(index);
+            }
+        })
+
+
+        // 页面开启查询有无实习内容相关
+        function getContentProjectProgress() {
+            isTmmSelected = false;
+            isProSelected = false;
+            console.log('')
+            var index;
+            $.ajax({
+                url: gpms.host + "api/search/internshipInfo",
+                type: "GET",
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                beforeSend: function(xhr) {
+                    // index = layer.msg('加载中', {
+                    //     icon: 16,
+                    //     shade: 0.01
+                    // });
+                },
+                success: function(res) {
+                    gpms.isLogin(res, function() {
+                        if (res.data.length == 0 || res.data[0].lcName == null) {
+                            layer.alert('暂无您的实习信息，赶紧添加吧！', {
+                                title: "提示",
+                                skin: 'layui-layer-molv',
+                                closeBtn: 0,
+                                scrollbar: false,
+
+                            })
+                            $('.modify').text("开启添加");
+                            model = "create";
+
+                        } else {
+                            model = "edit"
+                            // 将实习内容写入，页面初始化
+                            $('input[name="name"]').val(res.data[0].lcName);
+                            $('textarea[name="content"]').text(res.data[0].lcContent);
+                            $('input[name="ID"]').val(res.data[0].lcId);
+
+                            if (res.data[0].projectList != null || res.data[0].projectList.length != 0) {
+                                // 将项目信息写入
+                                table.render({
+                                    title: "项目信息",
+                                    elem: '#projectTable',
+                                    // width: 860,
+                                    // where: { stuName: '' },
+                                    data: res.data[0].projectList,
+                                    cols: [
+                                        [
+                                            // { type: "checkbox", width: 50, fixed: "left" },
+                                            { field: 'proName', title: '项目名', sort: true },
+                                            { field: 'teamName', title: '简介' },
+                                            {
+                                                field: 'd.team.teamName',
+                                                title: '团队',
+                                                templet: '<div>{{ d.team !== null?d.team.teamName:" "}}</div>',
+                                            },
+
+                                            { field: 'proComAcc', title: '企业' },
+                                            { field: 'proStarttime', title: '开始时间', templet: function(d) { return dateFormat(d.proStarttime); } },
+                                            { field: 'proEndtime', title: '结束时间', templet: function(d) { return dateFormat(d.proEndtime); } },
+                                            { title: '操作', minWidth: 100, templet: '#currentTableBar', fixed: "right", align: 'center', fixed: 'right' }
+                                        ]
+                                    ],
+                                    done: function(res, curr, count) {
+                                        console.log(res)
+                                        $('select[name="projectSelect2"]').html('<option value="">' + "未绑定团队的项目" + '</option>');
+                                        $.each(res.data, function(index, item) {
+                                            if (item.team == null) {
+                                                $('select[name="projectSelect2"]').append('<option value="' + item.proId + '">' + item.proName + '</option>');
+
+                                            } else {
+
+                                            }
+                                        });
+                                        form.render('select');
+
+                                    },
+                                    cellMinWidth: 100,
+                                    limits: [10, 15, 20, 25, 50, 100],
+                                    limit: 10,
+                                    // page: true
+                                });
+                            }
+                            // 将项目名字渲染进选项中
+                            // console.log(res.data[0].projectList)
+                            // for (var i = 0; i < res.data[0].projectList.length; i++) {
+                            //     setProjectSelecter($('.progressSelect'), res.data[0].projectList[i])
+                            // }
+                            console.log(res.data[0].projectList)
+                            setProjectSelecter($('select[name="progressSelect"]'), '请选择项目', res.data[0].projectList);
+                            // setProjectSelecter($('select[name="projectSelect"]'), '请选择项目', res.data[0].projectList);
+
+
+
+                            // 将团队成员写入
+                            getTeamMember(res.data[0].projectList)
+                            // 将项目进展写入
+                            getProgress(res.data[0].projectList)
+                        }
+                    });
+                },
+                error: function() {
+                    layer.msg('接口返回异常', { icon: 5 });
+                },
+                complete: function(xhr, status) {
+                    layer.close(index);
+                }
+            })
+
+        }
+
+        function getTeamMember(dataList) {
+            var len = dataList.length;
+            $('.teamBar').html('');
+
+            $('select[name=teamSelect]').html('<option value="">请选择团队</option>');
+            form.render('select');
+            for (var i = 0; i < len; i++) {
+                if (dataList[i].team != null) {
+
+                    $('select[name=teamSelect]').append('<option value="' + dataList[i].team.teamCode + '">' + dataList[i].team.teamName + '</option>');
+                    form.render('select');
+
+                    $('.teamBar').append("<h2>团队【" + dataList[i].team.teamName + "】的成员</h2");
+                    $('.teamBar').append("<table id='TeamMemberTable" + i + "' lay-filter='TeamMemberTable" + i + "'></table");
+
+                    table.render({
+                        title: "项目成员信息",
+                        elem: '#TeamMemberTable' + i,
+                        // width: 860,
+                        // where: { stuName: '' },
+                        data: dataList[i].team.teamMemberList,
+                        cols: [
+                            [
+                                { field: 'tmName', title: '成员名', sort: true },
+                                { field: 'tmDuty', title: '职责' },
+                                { title: '操作', minWidth: 100, templet: '#currentTableBar', fixed: "right", align: 'center', fixed: 'right' }
+                            ]
+                        ],
+                        done: function(res, curr, count) {
+
+                        },
+                        cellMinWidth: 100,
+                        limits: [5, 10, 15, 20, 25, 30],
+                        limit: 5,
+                        // page: true
+                    });
+
+                    // 监听进展表格操作
+                    table.on('tool(TeamMemberTable' + i + ')', function(obj) {
+                        var data = obj.data;
+                        if (obj.event === 'edit') {
+                            $('input[name=TeamMemName]').val(data.tmName)
+                            $('input[name=TeamMemDuty]').val(data.tmDuty)
+                            var openL = layer.open({
+                                type: 1,
+                                title: '团队【' + data.tmName + '】编辑',
+                                content: $('#TTTeamMember'),
+                                // area: ['700px', '400px;'],
+                                btn: ['提交', '取消'],
+                                yes: function() {
+                                    // 提交更改
+                                    $.ajax({
+                                        url: gpms.host + "api/stu/upTeamMember",
+                                        type: "POST",
+                                        data: 'tmName=' + $('input[name=TeamMemName]').val() +
+                                            '&tmDuty=' + $('input[name=TeamMemDuty]').val() +
+                                            '&tmTeamCode=' + data.tmTeamCode +
+                                            '&tmId=' + data.tmId,
+                                        xhrFields: { withCredentials: true },
+                                        crossDomain: true,
+                                        beforeSend: function(xhr) {
+                                            index = layer.msg('提交中', {
+                                                icon: 16,
+                                                shade: 0.01
+                                            });
+                                        },
+                                        success: function(res) {
+                                            getContentProjectProgress();
+                                            layer.msg('提交成功', { icon: 1 });
+                                            layer.close(openL);
+                                        },
+                                        error: function() {
+                                            layer.msg('接口返回异常', { icon: 5 });
+                                        },
+                                        complete: function(xhr, status) {
+                                            layer.close(index);
+                                        }
+                                    })
+                                },
+                                btn2: function() {
+
+                                },
+                            })
+                        } else if (obj.event === 'delete') {
+                            layer.confirm('确定删除么', { title: '删除进展【' + data.progName + '】' }, function(index) {
+                                obj.del();
+                                $.ajax({
+                                    url: gpms.host + "api/stu/delTeamMember",
+                                    type: "POST",
+                                    data: 'tmName=' + $('input[name=TeamMemName]').val() +
+                                        '&tmDuty=' + $('input[name=TeamMemDuty]').val() +
+                                        '&tmTeamCode=' + data.tmTeamCode +
+                                        '&tmId=' + data.tmId,
+                                    xhrFields: { withCredentials: true },
+                                    crossDomain: true,
+                                    beforeSend: function(xhr) {
+                                        index = layer.msg('提交中', {
+                                            icon: 16,
+                                            shade: 0.01
+                                        });
+                                    },
+                                    success: function(res) {
+                                        getContentProjectProgress();
+                                        layer.msg('提交成功', { icon: 1 });
+                                        layer.close(openL);
+                                    },
+                                    error: function() {
+                                        layer.msg('接口返回异常', { icon: 5 });
+                                    },
+                                    complete: function(xhr, status) {
+                                        layer.close(index);
+                                    }
+                                })
+                                layer.close(index);
+                            });
+                        }
+                    });
+                }
+
+            }
+        }
+        /****************************************************************/
+        function getProgress(dataList) {
+            var len = dataList.length;
+            console.log(len)
+            $('.ProgressBar').html('')
+            for (var i = 0; i < len; i++) {
+                $('.ProgressBar').append("<h2>【" + dataList[i].proName + "】进展</h2");
+                $('.ProgressBar').append("<table id='progressTable" + i + "' lay-filter='progressTable" + i + "'></table");
+
+                table.render({
+                    title: "项目进展信息",
+                    elem: '#progressTable' + i,
+                    // width: 860,
+                    // where: { stuName: '' },
+                    data: dataList[i].progressList,
+                    cols: [
+                        [
+                            // { type: "checkbox", width: 50, fixed: "left" },
+                            { field: 'progName', title: '进展名称', sort: true },
+                            { field: 'progDuty', title: '简介' },
+                            { field: 'progStarttime', title: '开始时间', templet: function(d) { return dateFormat(d.progStarttime); } },
+                            { field: 'progEndtime', title: '结束时间', templet: function(d) { return dateFormat(d.progEndtime); } },
+                            { title: '操作', minWidth: 30, templet: '#currentTableBar', fixed: "right", align: "center" }
+                        ]
+                    ],
+
+                    done: function(res, curr, count) {},
+                    cellMinWidth: 100,
+                    limits: [5, 10, 15, 20, 25, 30],
+                    limit: 5,
+                    // page: true
+                });
+
+                // 监听进展表格操作
+                table.on('tool(progressTable' + i + ')', function(obj) {
+                    var data = obj.data;
+                    if (obj.event === 'edit') {
+                        $('input[name=ProgressName]').val(data.progName);
+                        $('input[name=ProgressDuty]').val(data.progDuty);
+                        $("input[name='ProgressStart']").val(dateFormat(data.progStarttime));
+                        $("input[name='ProgressEnd']").val(dateFormat(data.progEndtime));
+                        var openL = layer.open({
+                            type: 1,
+                            title: '进展【' + data.progName + '】编辑',
+                            content: $('#PPProgressBar'),
+                            // area: ['700px', '400px;'],
+                            btn: ['提交', '取消'],
+                            yes: function() {
+                                // 提交更改
+                                $.ajax({
+                                    url: gpms.host + "api/stu/upProgress",
+                                    type: "POST",
+                                    data: 'progName=' + $('input[name=ProgressName]').val() +
+                                        '&progDuty=' + $('input[name=ProgressDuty]').val() +
+                                        '&progStarttime0=' + data.progStarttime +
+                                        '&progEndtime0=' + data.progEndtime +
+                                        '&progId=' + data.progId,
+                                    xhrFields: { withCredentials: true },
+                                    crossDomain: true,
+                                    beforeSend: function(xhr) {
+                                        index = layer.msg('提交中', {
+                                            icon: 16,
+                                            shade: 0.01
+                                        });
+                                    },
+                                    success: function(res) {
+                                        getContentProjectProgress();
+                                        layer.msg('提交成功', { icon: 1 });
+                                        layer.close(openL);
+                                    },
+                                    error: function() {
+                                        layer.msg('接口返回异常', { icon: 5 });
+                                    },
+                                    complete: function(xhr, status) {
+                                        layer.close(index);
+                                    }
+                                })
+                            },
+                            btn2: function() {
+
+                            },
+                        })
+                    } else if (obj.event === 'delete') {
+                        layer.confirm('确定删除么', { title: '删除进展【' + data.progName + '】' }, function(index) {
+                            obj.del();
+                            $.ajax({
+                                url: gpms.host + "api/stu/delProgress",
+                                type: "POST",
+                                data: 'progName=' + $('input[name=ProgressName]').val() +
+                                    '&progDuty=' + $('input[name=ProgressDuty]').val() +
+                                    '&progStarttime0=' + data.progStarttime +
+                                    '&progEndtime0=' + data.progEndtime +
+                                    '&progId=' + data.progId,
+                                xhrFields: { withCredentials: true },
+                                crossDomain: true,
+                                beforeSend: function(xhr) {
+                                    index = layer.msg('提交中', {
+                                        icon: 16,
+                                        shade: 0.01
+                                    });
+                                },
+                                success: function(res) {
+                                    getContentProjectProgress();
+                                    layer.msg('提交成功', { icon: 1 });
+                                    layer.close(openL);
+                                },
+                                error: function() {
+                                    layer.msg('接口返回异常', { icon: 5 });
+                                },
+                                complete: function(xhr, status) {
+                                    layer.close(index);
+                                }
+                            })
+                            layer.close(index);
+                        });
+                    }
+                });
+            }
+        }
+
+
+        // 监听项目表格操作
+        table.on('tool(projectTable)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                $('input[name=projectName]').val(data.proName);
+                $("select[name='companySelect']").val(data.proConId);
+                form.render('select');
+                $("input[name='projectStart']").val(dateFormat(data.proStarttime));
+                $("input[name='projectEnd']").val(dateFormat(data.proEndtime));
+                $("textarea[name='projectSign']").val(data.proSign);
+                var openL = layer.open({
+                    type: 1,
+                    title: '项目【' + data.proName + '】编辑',
+                    content: $('#PPProjectBar'),
+                    // area: ['700px', '400px;'],
+                    btn: ['提交', '取消'],
+                    yes: function() {
+                        // 提交更改
+                        $.ajax({
+                            url: gpms.host + "api/stu/upProject",
+                            type: "POST",
+                            data: 'proName=' + $('input[name=projectName]').val() +
+                                '&proStarttime0=' + data.proStarttime +
+                                '&proEndtime0=' + data.proStarttime +
+                                '&proConId=' + $('input[name="ID"]').val() +
+                                '&proComAcc=' + data.proComAcc +
+                                '&proSign=' + $("textarea[name='projectSign']").val() +
+                                '&proId=' + data.proId,
+                            xhrFields: { withCredentials: true },
+                            crossDomain: true,
+                            beforeSend: function(xhr) {
+                                index = layer.msg('提交中', {
+                                    icon: 16,
+                                    shade: 0.01
+                                });
+                            },
+                            success: function(res) {
+                                getContentProjectProgress();
+                                layer.msg('提交成功', { icon: 1 });
+                                layer.close(openL);
+                            },
+                            error: function() {
+                                layer.msg('接口返回异常', { icon: 5 });
+                            },
+                            complete: function(xhr, status) {
+                                layer.close(index);
+                            }
+                        })
+                    },
+                    btn2: function() {
+
+                    },
+                })
+
+            } else if (obj.event === 'delete') {
+                layer.confirm('将删除项目相关信息，确定么', { title: '删除项目【' + data.proName + '】' }, function(index) {
+                    obj.del();
+                    $.ajax({
+                        url: gpms.host + "api/stu/delProject",
+                        type: "POST",
+                        data: 'proName=' + $('input[name=projectName]').val() +
+                            '&proStarttime0=' + data.proStarttime +
+                            '&proEndtime0=' + data.proStarttime +
+                            '&proConId=' + $('input[name="ID"]').val() +
+                            '&proComAcc=' + data.proComAcc +
+                            '&proSign=' + $("textarea[name='projectSign']").val() +
+                            '&proId=' + data.proId,
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('提交中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            getContentProjectProgress();
+                            layer.msg('提交成功', { icon: 1 });
+                            layer.close(openL);
+                        },
+                        error: function() {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+                    layer.close(index);
+                });
+            }
+        });
+
+        // 获取项目
+        getContentProjectProgress();
+
+
+        $('.internshipForm').on('click', '.modify', function() {
+            var sub = '<button type="submit" class="layui-btn" lay-submit="" lay-filter="plus">立即提交</button>',
+                quit = '<button type="button" class="layui-btn layui-btn-primary quit">取消</button>';
+            $('.buttonGroup').html(sub + quit);
+            $('input[name="name"]').removeAttr('disabled');
+            $('input[name="name"]').removeClass('layui-disabled');
+            $('textarea[name="content"]').removeAttr('disabled');
+            $('textarea[name="content"]').removeClass('layui-disabled');
+            $('input[name="name"]').focus();
+
+        }).on('click', '.quit', function() {
+            var mod = '<button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>';
+            $('input[name="name"]').attr('disabled', 'disabled');
+            $('input[name="name"]').addClass('layui-disabled');
+            $('textarea[name="content"]').attr('disabled', 'disabled');
+            $('textarea[name="content"]').addClass('layui-disabled');
+            $('.buttonGroup').html(mod);
+            form.render();
+        })
+
+        // 实习内容开启修改
+        form.on('submit(plus)', function(data) {
+            var btnText = "开启修改";
+            if (model == "create") {
+                btn = "开启添加";
+            }
+            // ui初始化
+            var mod = '<button type="button" class="layui-btn layui-btn-normal modify">开启修改</button>';
+            $('input[name="name"]').attr('disabled', 'disabled');
+            $('input[name="name"]').addClass('layui-disabled');
+            $('textarea[name="content"]').attr('disabled', 'disabled');
+            $('textarea[name="content"]').addClass('layui-disabled');
+            $('.buttonGroup').html(mod);
+            form.render();
+
+            if (model == "create") {
+                // 提交新建
+                $.ajax({
+                    url: gpms.host + "api/stu/createContent",
+                    type: "POST",
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    data: "title=" + $('input[name="name"]').val() + "&content=" + $('textarea[name="content"]').val(),
+                    beforeSend: function(xhr) {
+                        index = layer.msg('提交中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        layer.msg('提交成功', { icon: 1 });
+
+                    },
+                    error: function() {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            } else {
+                // 提交更改
+                $.ajax({
+                    url: gpms.host + "api/stu/upContent",
+                    type: "POST",
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    data: "title=" + $('input[name="name"]').val() + "&content=" + $('textarea[name="content"]').val(),
+                    beforeSend: function(xhr) {
+                        index = layer.msg('提交中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        layer.msg('提交成功', { icon: 1 });
+
+                    },
+                    error: function() {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            }
+
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+
+
+        // 监听选择
+        var isProSelected = false;
+        var isTmmSelected = false;
+        // var ProSelected = false;
+        // var TmmSelected = false;
+        var selectText;
+        // 监听选择
+        form.on('select(progressSelect)', function(data) {
+            console.log(data); //得到select原始DOM对象
+            selectText = data.elem[data.elem.selectedIndex].text
+            isProSelected = true;
+            // ProSelected = data.value
+            if (data.value == "" || data.value == null) {
+                isProSelected = false;
+            }
+        });
+
+        form.on('select(teamSelect)', function(data) {
+            console.log(data); //得到select原始DOM对象
+            selectText = data.elem[data.elem.selectedIndex].text
+            isTmmSelected = true;
+            // TmmSelected = data.value
+            if (data.value == "" || data.value == null) {
+                isTmmSelected = false;
+            }
+        });
+
+        // 添加项目
+        form.on('submit(addProject)', function(data) {
+
+            $('input[name=projectName]').val("");
+            $("select[name='companySelect']").val("");
+            form.render('select');
+            $("input[name='projectStart']").val("");
+            $("input[name='projectEnd']").val("");
+            $("textarea[name='projectSign']").val("");
+
+            // $('input[name=projectName]').removeAttr('disabled');
+            // $('input[name=projectName]').removeClass('layui-disabled');
+            var openL = layer.open({
+                type: 1,
+                title: '添加项目',
+                content: $('#PPProjectBar'),
+                // area: ['700px', '300px'],
+                btn: ['提交', '取消'],
+                yes: function() {
+                    if ($('input[name=projectName]').val() == "" ||
+                        $("select[name='companySelect']").val() == "" ||
+                        $("input[name='projectStart']").val() == "" ||
+                        $("input[name='projectEnd']").val() == "") {
+                        layer.msg('必填项存在空值', { icon: 5 });
+                        return;
+                    }
+
+                    // 提交更改
+                    $.ajax({
+                        url: gpms.host + "api/stu/createProject",
+                        type: "POST",
+                        data: 'proName=' + $('input[name=projectName]').val() +
+                            '&proStarttime0=' + ProjectStrat +
+                            '&proEndtime0=' + ProjectEnd +
+                            '&proConId=' + $('input[name="ID"]').val() +
+                            '&proComAcc=' + $("select[name='companySelect']").val() +
+                            '&proSign=' + $("textarea[name='projectSign']").val(),
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('提交中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            getContentProjectProgress();
+                            layer.msg('提交成功', { icon: 1 });
+                            layer.close(openL);
+                        },
+                        error: function() {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+                },
+                btn2: function() {
+
+                },
+            })
+
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        // 添加团队
+        form.on('submit(addTeam)', function(data) {
+            $('input[name=TeamCode]').val("");
+            $('input[name=TeamName]').val("");
+            $("select[name='projectSelect2']").val("");
+            $('textarea[name="TeamSign"]').val("")
+            form.render('select');
+
+            var openL = layer.open({
+                type: 1,
+                title: '添加项目团队',
+                content: $('#TTTeam'),
+                // area: ['700px', '300px'],
+                btn: ['提交', '取消'],
+                yes: function() {
+                    if ($('input[name=TeamCode]').val() == "" ||
+                        $('input[name=TeamName]').val() == "" ||
+                        $("select[name='projectSelect2']").val() == "") {
+                        layer.msg('必填项存在空值', { icon: 5 });
+                        return;
+                    }
+                    // 提交更改
+                    $.ajax({
+                        url: gpms.host + "api/stu/createTeam",
+                        type: "POST",
+                        data: 'teamCode=' + $('input[name=TeamCode]').val() +
+                            '&teamName=' + $('input[name=TeamName]').val() +
+                            '&teamProId=' + $("select[name='projectSelect2']").val() +
+                            '&teamSign=' + $('textarea[name=TeamSign]').val(),
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('提交中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            getContentProjectProgress();
+                            layer.msg('提交成功', { icon: 1 });
+                            layer.close(openL);
+                        },
+                        error: function() {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+                },
+                btn2: function() {
+
+                },
+            })
+
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        // 添加团队成员
+        form.on('submit(addTeamMember)', function(data) {
+            if (!isTmmSelected) {
+                layer.msg('未选择团队', { icon: 5 });
+                return;
+            }
+
+            $('input[name=TeamMemName]').val("")
+            $('input[name=TeamMemDuty]').val("")
+            var openL = layer.open({
+                type: 1,
+                title: '添加【' + selectText + '】成员',
+                content: $('#TTTeamMember'),
+                // area: ['700px', '300px'],
+                btn: ['提交', '取消'],
+                yes: function() {
+                    if ($('input[name=TeamMemName]').val() == "" ||
+                        $('input[name=TeamMemDuty]').val() == "") {
+                        layer.msg('必填项存在空值', { icon: 5 });
+                        return;
+                    }
+
+                    // 提交更改
+                    $.ajax({
+                        url: gpms.host + "api/stu/createTeamMember",
+                        type: "GET",
+                        data: 'tmName=' + $('input[name=TeamMemName]').val() +
+                            '&tmDuty=' + $('input[name=TeamMemDuty]').val() +
+                            '&tmTeamCode=' + $('select[name=teamSelect]').val(),
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('提交中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            getContentProjectProgress();
+                            layer.msg('提交成功', { icon: 1 });
+                            layer.close(openL);
+                        },
+                        error: function() {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+                },
+                btn2: function() {
+
+                },
+            })
+
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        // 添加进展
+        form.on('submit(addProgress)', function(data) {
+            if (!isProSelected) {
+                layer.msg('未选择项目', { icon: 5 })
+                return;
+            }
+            $('input[name=ProgressName]').val("");
+            $('input[name=ProgressDuty]').val("");
+            $("input[name='ProgressStart']").val("");
+            $("input[name='ProgressEnd']").val("");
+            var openL = layer.open({
+                type: 1,
+                title: '添加【' + selectText + '】项目进展',
+                content: $('#PPProgressBar'),
+                // area: ['700px', '400px;'],
+                btn: ['提交', '取消'],
+                yes: function() {
+                    if ($('input[name=ProgressName]').val() == "" ||
+                        $('input[name=ProgressDuty]').val() == "" ||
+                        $("input[name='ProgressStart']").val() == "" ||
+                        $("input[name='ProgressEnd']").val() == "") {
+                        layer.msg('必填项存在空值', { icon: 5 });
+                        return;
+                    }
+                    // 提交更改
+                    $.ajax({
+                        url: gpms.host + "api/stu/createProgress",
+                        type: "POST",
+                        data: 'progName=' + $('input[name=ProgressName]').val() +
+                            '&progDuty=' + $('input[name=ProgressDuty]').val() +
+                            '&progStarttime0=' + ProgressStart +
+                            '&progEndtime0=' + ProgressEnd +
+                            '&progProId=' + $('select[name=progressSelect]').val(),
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('提交中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            getContentProjectProgress();
+                            layer.msg('提交成功', { icon: 1 });
+                            layer.close(openL);
+                        },
+                        error: function() {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+                },
+                btn2: function() {
+
+                },
+            })
+        })
+
+
+
+        function setCompanySelecter(ele, text, data) {
+            ele.html('<option value="">' + text + '</option>');
+            $.each(data, function(index, item) {
+                ele.append('<option value="' + item.comAccount + '">' + item.comName + '</option>');
+            });
+            form.render('select');
+        }
+
+        function setProjectSelecter(ele, text, data) {
+            ele.html('<option value="">' + text + '</option>');
+            $.each(data, function(index, item) {
+                ele.append('<option value="' + item.proId + '">' + item.proName + '</option>');
+            });
+            form.render('select');
+        }
+        // function setTeamSelecter(ele, text, data) {
+        //     ele.html('<option value="">' + text + '</option>');
+        //     $.each(data, function(index, item) {
+        //         ele.append('<option val='+ item.tmTeamCode +  'value="' + item.tmId + '">' + item.tmName + '</option>');
+        //     });
+        //     form.render('select');
+        // }
+    })
+    </script>
+</body>
+
+</html>

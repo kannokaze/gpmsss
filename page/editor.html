@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>日志编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <blockquote class="layui-elem-quote">实习日志上传
+                <div class="listTimeBar layui-inline" style="float: right;"></div>
+            </blockquote>
+            <div class="layui-fluid ">
+                <div class="layui-row layui-col-space20">
+                    <div class="layui-col-sm6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-list icon"></i>日志列表
+                                <button class="layui-btn" style="float:right;" id="new">新建日志</button>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" id="journalTable" lay-filter="journalTable"></table>
+                                <script type="text/html" id="currentTableBar">
+                                    {{#  if(d.jourStatus ==0){ }}
+                                    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="detail">查看</a>
+                                    <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                                    <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+                                    {{# }else{ }}
+                                    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="detail">查看</a>
+
+                                    {{#  } }}
+                                </script>
+                            </div>
+                            <br>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                注：<br>
+                                按照实习日志要求，需在内容上添加一行<br>
+                                【实习时间：XXXX年X月XX日至X月XX日 第X周】
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6 right">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script type="text/javascript" src="../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['layedit', 'form', 'table', 'jquery'], function() {
+        var $ = layui.$,
+            layedit = layui.layedit,
+            form = layui.form,
+            table = layui.table;
+
+        var index = null; //建立编辑器
+        var editBar = false;
+        var isTime = getConfigDeadline($('.listTimeBar'));
+
+        table.render({
+            title: "日志列表",
+            elem: '#journalTable',
+            url: gpms.host + "api/stu/searchJournal",
+            // where: { stuName: '' },
+            // data: dataList[i].progressList,
+            cols: [
+                [
+                    // { type: "checkbox", width: 50, fixed: "left" },
+                    // { field: 'progName', title: '进展名称', sort: true },
+                    // { field: 'progDuty', title: '简介' },
+                    // { field: 'progStarttime', title: '开始时间', templet: function(d) { return dateFormat(d.progStarttime); } },
+                    { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                    { field: 'jourId', hide: true, },
+                    { field: 'jourTitle', title: '标题' },
+                    { field: 'jourSavetime', title: '保存时间', templet: function(d) { return dateFormat(d.jourSavetime); } },
+                    {
+                        field: 'jourStatus',
+                        title: '状态',
+                        sort: true,
+                        width: 80,
+                        templet: function(d) {
+                            if (d.jourStatus == "0") {
+                                return '<span class="layui-badge layui-bg-blue">已保存</span>';
+                            } else {
+                                return '<span class="layui-badge-rim">已提交</span>';
+                            }
+                        }
+                    },
+
+                    { field: 'jourContent', title: '内容预览', hide: true },
+                    { title: '操作', width: 180, templet: '#currentTableBar', fixed: "right", align: "center" }
+                ]
+            ],
+            done: function(res, curr, count) {
+                if (res.data[0] == null) {
+                    layer.alert('您还没有提交过一篇日志哦');
+                }
+            },
+            text: {
+                none: '没有找到您的日志哦' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+            },
+            cellMinWidth: 100,
+            id: 'tableid',
+            page: false
+        });
+
+        table.on('tool(journalTable)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+            if (layEvent === 'detail') { //查看
+                //do somehing
+                parent.layer.open({
+                    type: 1,
+                    title: "【 " + obj.data.jourTitle + " 】 查看",
+                    content: "<div style='padding:15px;'>" + obj.data.jourContent + "</div>",
+                    area: ['600px', '600px'],
+                });
+
+            } else if (layEvent === 'delete') { //删除
+                layer.confirm('确定删除么', { title: '提示' }, function(index) {
+
+                    $.ajax({
+                        url: gpms.host + "api/stu/delJournal",
+                        type: "POST",
+                        data: "&jourId=" + data.jourId,
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        success: function(res) {
+                            // isSave = true;
+                            layedit.setContent("");
+                            $('input[name="title"]').val("");
+                            $('input[name="ID"]').val("");
+                            layer.msg(res.msg);
+                        },
+                        error: function(error) {
+                            layer.msg('接口返回出现错误', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            table.reload('tableid');
+                        }
+                    });
+
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+
+            } else if (layEvent === 'edit') { //编辑
+                if (obj.data.jourId == $('input[name="ID"]').val()) {
+                    layer.msg("已经处于编辑该文档了！",{icon:0});
+                    return;
+                }
+                
+                if (typeof layedit.getContent(index) != "undefined" && layedit.getContent(index) != "") {
+                    layer.confirm('将离开当前编辑文档，是否保存草稿', { icon: 0, title: '警告', btn: ['保存', '不保存','取消'] }, function() {
+                        // 保存后替换
+                        if (saveJour($('input[name="ID"]').val(), $('input[name="title"]').val(), layedit.getContent(index))) {
+                            createEidtBar("日志【" + data.jourTitle + "】编辑");
+                            layedit.setContent(index, data.jourContent);
+                            $('input[name="title"]').val(data.jourTitle);
+                            $('input[name="ID"]').val(data.jourId);
+                            $('.tit').text("日志【" + data.jourTitle + "】编辑");
+                        }
+
+                    }, function() {
+                        layedit.setContent(index, data.jourContent);
+                        $('input[name="title"]').val(data.jourTitle);
+                        $('input[name="ID"]').val(data.jourId);
+                        $('.tit').text("日志【" + data.jourTitle + "】编辑");
+                    })
+
+                    return;
+                } else {
+                    createEidtBar("日志【" + data.jourTitle + "】编辑");
+                    layedit.setContent(index, data.jourContent);
+                    $('input[name="title"]').val(data.jourTitle);
+                    $('input[name="ID"]').val(data.jourId);
+                    $('.tit').text("日志【" + data.jourTitle + "】编辑");
+                }
+
+                layer.tips('已启动编辑模式', $('input[name="title"]'));
+            }
+        });
+
+        // 保存草稿
+        function saveJour(id, title, content, successTip, errorTip) {
+
+            var isSave = false,
+                successTip = successTip || "保存草稿成功",
+                errorTip = errorTip || "保存草稿失败";
+            var url = gpms.host + "api/stu/saveJournal",
+                data = "title=" + title + "&content=" + content + "&jourId=" + id;
+            // console.log(getConfigDeadline($('.listTimeBar')))
+            // if (!getConfigDeadline($('.listTimeBar'))) {
+            //     return;
+            // }
+
+            if (content == null || content == "") {
+                layer.msg('日志内容不能为空', { icon: 5 })
+                $('#text').focus();
+                return;
+            }
+
+            // 存在则新建模式 , 否则默认的修改模式
+            if (id == "" || id == null) {
+                url = gpms.host + "api/stu/saveJournalNew";
+                data = "title=" + title + "&content=" + content;
+            }
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                async:false,
+                success: function() {
+                    isSave = true;
+                    layedit.setContent(index,"");
+                    $('input[name="title"]').val("");
+                    $('input[name="ID"]').val("");
+                    layer.msg(successTip, { icon: 1 });
+                    $('.right').html('');
+                },
+                error: function() {
+                    layer.msg(errorTip, { icon: 5 });
+                },
+                complete: function(xhr, status) {
+                    table.reload('tableid');
+                }
+            });
+
+            return isSave;
+        }
+
+
+        // 提交日志
+        function upJour(id, title, content) {
+            var url = gpms.host + "api/stu/upJournal",
+                data = "title=" + title + "&content=" + content + "&jourId=" + id;
+
+            if (!getConfigDeadline($('.listTimeBar'))) {
+                return;
+            }
+
+            if (content == null || content == "") {
+                layer.msg('日志内容不能为空', { icon: 5 })
+                $('#text').focus();
+                return;
+            }
+
+            layer.confirm('提交后将无法修改，确定提交吗？', function() {
+                // 新建模式，否则就是编辑模式
+                if (id == "" || id == null) {
+                    url = gpms.host + "api/stu/upJournalNew";
+                    data = "title=" + title + "&content=" + content;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data,
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    async:false,
+                    success: function(res) {
+                        // layedit.setContent(index, "");
+                        // $('input[name="title"]').val("");
+                        // $('input[name="ID"]').val("");
+                        // $('.right').html("");
+                        layer.msg('提交成功', { icon: 1 }); 
+                        $('.right').html('');
+
+                    },
+                    error: function(xhr, status, error) {
+                        layer.msg('提交失败' + error, { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        table.reload('tableid');
+                    }
+                })
+            }, function() {
+
+            })
+
+        }
+
+
+        // 自动保存日志草稿
+        // function autoSaveJour() {
+        //     var autoClock = setInterval(function() {
+        //         var successTip = new Date().format("yyyy-MM-dd hh:mm:ss") + "已自动保存草稿";
+        //         saveJour($('input[name="ID"]').val(), $('input[name="title"]'), layedit.getContent(index), successTip, "自动保存失败");
+        //         if (stopFlag) {
+        //             clearInterval(autoClock);
+        //         }
+        //     }, 60000);
+        // }
+
+        // 手动保存日志草稿
+        form.on('submit(save)', function(data) {
+            saveJour($('input[name="ID"]').val(), $('input[name="title"]').val(), layedit.getContent(index), '保存草稿成功', "保存草稿失败,请重试");
+
+            return false;
+        });
+
+        // 手动提交日志草稿
+        form.on('submit(sub)', function(data) {
+            upJour($('input[name="ID"]').val(), $('input[name="title"]').val(), layedit.getContent(index));
+            // console.log(layedit.getContent(index));
+            return false;
+        });
+
+        function createEidtBar(title) {
+            var html = '<div class="layui-card " style="z-index: -1;"><div class="layui-card-header"><i class="layui-icon layui-icon-edit icon"></i><span class="tit">' + title + '</span></div><div class="layui-card-body" style="position: relative;"><form class="layui-form" action="#" method="post"><div class="layui-form-item"><input type="hidden" name="ID" class="layui-input"><input type="text" name="title" lay-verify="required" placeholder="日志标题" autocomplete="off" class="layui-input" lay-reqtext="请输入日志标题哦！"></div><div class="layui-form-item layui-form-text"><textarea id="text" style="display: none;" lay-verify="" placeholder="请按照如下格式编写：<br>实习时间：2019年7月20日至7月26日  第1周<br>实习日志内容" lay-reqtext=""></textarea></div><div class="layui-form-item"><button class="layui-btn" lay-submit="" lay-filter="sub">立即提交</button><button type="button" class="layui-btn layui-btn-primary" lay-submit="" lay-filter="save">保存草稿</button></div></form></div></div>';
+            $('.right').html(html);
+            index = layedit.build('text', { height: 560 });
+            editBar = true;
+        }
+
+        
+        $('#new').on('click', function() {
+            createEidtBar("新建日志");
+            $('.tit').text("新建日志");
+            if (layedit.getContent(index)) {
+                layer.confirm('当前编辑文档尚未保存，是否保存草稿', { icon: 0, title: '警告', btn: ['保存', '放弃'] }, function() {
+                    // 保存后清空
+                    if (saveJour($('input[name="ID"]').val(), $('input[name="title"]').val(), layedit.getContent(index))) {
+                        $('.tit').text("新建日志");
+                        layer.tips('已启动新建模式', $('input[name="title"]'));
+                    }
+
+                }, function() {
+                    layedit.setContent(index, "");
+                    $('input[name="title"]').val("");
+                    $('input[name="ID"]').val("");
+                    $('.tit').text("新建日志");
+                    layer.tips('已启动新建模式', $('input[name="title"]'));
+                })
+                return;
+            }
+
+
+            $('input[name="title"]').focus();
+            layer.tips('已启动新建模式', $('input[name="title"]'));
+        })
+    });
+    </script>
+</body>
+
+</html>

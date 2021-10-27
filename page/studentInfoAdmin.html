@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>管理端 学生账户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <fieldset class="layui-elem-field layuimini-search">
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <!-- <label class="layui-form-label">关键字</label> -->
+                                <div class="layui-input-inline">
+                                    <select name="keyType" lay-verify="" class="keyType" lay-filter="keyType">
+                                        <option value="stage">届期</option>
+                                        <option value="no">学号</option>
+                                        <option value="name">姓名</option>
+                                        <!-- <option value="class">班级</option>
+                                        <option value="teacher">教师</option>
+                                        <option value="major">专业</option>
+                                        <option value="direction">方向</option> -->
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="key" autocomplete="off" class="layui-input" lay-verify="required" lay-reqText="关键字不能为空">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <div class="layui-inline">
+                <div class="layui-btn-group">
+                    <button class="layui-btn data-add-btn add">添加</button>
+                    <button class="layui-btn data-add-btn adds">表格导入</button>
+                    <!-- <button class="layui-btn layui-btn-danger data-delete-btn">过期勾选</button> -->
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-btn-group">
+                    <button class="layui-btn">
+                        <a class="downModel" href="" style="text-decoration: none; color: #fff;" download="学生信息导入模板">下载模板
+                        </a>
+                    </button>
+                    <button class="layui-btn download layui-disabled down" disabled="">
+                        导出当前搜索结果
+                    </button>
+                </div>
+            </div>
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            <script type="text/html" id="currentTableBar">
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</button>
+                <button class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">过期</button>
+                <button class="layui-btn layui-btn-xs layui-btn-normal data-count-delete" lay-event="add">激活</button>
+            </div>
+            </script>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script src="../js/excel.min.js"></script>
+    <script>
+    layui.use(['form', 'table', 'layer'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            excel = layui.excel;
+        layer = layui.layer;
+
+
+        $('.downModel').attr('href', gpms.downloadHost + "/Template/student_exports.xlsx");
+
+        var userInfoList;
+        var wh = null,
+            whs = null;
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function(data) {
+            // var result = JSON.stringify(data.field);
+
+            if (data.field.keyType == "stage") {
+                wh = { stuStage: data.field.key }
+                whs = "stuStage=" + data.field.key;
+            } else if (data.field.keyType == "name") {
+                wh = { stuName: data.field.key }
+                whs = "stuName=" + data.field.key;
+            } else if (data.field.keyType == "no") {
+                wh = { stuNo: data.field.key }
+                whs = "stuNo=" + data.field.key;
+            } else if (data.field.keyType == "class") {
+                wh = { stuNo: data.field.key }
+                whs = "stuName=" + data.field.key;
+            } else if (data.field.keyType == "major") {
+                wh = { stuNo: data.field.key }
+                whs = "stuName=" + data.field.key;
+            } else if (data.field.keyType == "direction") {
+                wh = { stuNo: data.field.key }
+                whs = "stuName=" + data.field.key;
+            } else if (data.field.keyType == "teacher") {
+                wh = { stuNo: data.field.key }
+                whs = "stuName=" + data.field.key;
+            }
+            // 关键字
+            // if (data.field.key == null || data.field.key == "") {
+            //     var index = layer.confirm('无关键字将进行全表搜索，您确认继续吗？', function() {
+            //         do_search(wh);
+            //         layer.close(index);
+
+            //     }, function() {});
+            //     return;
+            // }
+            $('.download').removeClass('layui-disabled');
+            $('.download').removeAttr('disabled');
+            $('.download').on('click', function() {
+                gpms.download(gpms.host + 'api/download/outputStudentExcel?' + whs, "关键字" + data.field.key + "的搜索结果" + "." + "xlsx");
+
+            })
+            // 表格加载
+            userInfoList = table.render({
+                title: "学生信息",
+                elem: '#currentTableId',
+                height: 466,
+                where: wh,
+                id: 'userInfoList',
+                url: gpms.host + 'api/search/studentList',
+                cols: [
+                    [
+                        { type: "checkbox", width: 50, fixed: "left" },
+                        { field: 'stuNo', title: '学号', sort: true },
+                        { field: 'stuName', title: '学生名' },
+                        { field: 'stuPassword', title: '密码' },
+                        { field: 'stuPhone', title: '手机' },
+                        { field: 'stuEmail', title: '邮箱', minWidth: 150 },
+                        {
+                            field: 'stuGender',
+                            title: '性别',
+                            sort: true,
+                            templet: function(d) {
+                                // if (d.stuGender == '') return '无';
+                                if (d.stuGender == '1') return '女';
+                                else if (d.stuGender == '0') return '男';
+                            }
+
+                        },
+                        { field: 'stuAddress', title: '住址', sort: true },
+                        {
+                            field: 'stuState',
+                            title: '状态',
+                            templet: function(d) {
+                                // if (d.stuGender == '') return '无';
+                                if (d.stuState == '0') return '正常';
+                                else if (d.stuState == '1') return '待审核';
+                                else if (d.stuState == '2') return '封禁';
+                                else if (d.stuState == '3') return '过期';
+                                else if (d.stuState == '4') return '注销';
+                            }
+                        },
+                        { field: 'stuStage', title: '届期', sort: true },
+                        { title: '操作', minWidth: 150, templet: '#currentTableBar', fixed: "right", align: "center" }
+                    ]
+                ],
+                parseData: function(res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": 1000, //解析数据长度
+                        "data": res.data, //解析数据列表
+                    };
+                },
+                done: function(res, curr, count) {
+                    gpms.isLogin(res);
+                    this.where = {};
+                    // res.data.unshift({ sdId: '序号', stuNo: '学号', stuName: '学生名', stuPassword: '密码', stuPhone: '手机', stuEmail: '邮箱',stuGender: '性别',stuAddress: '地址',stuState: '状态', });
+                    // excel.exportExcel({
+                    //     sheet1: res.data
+                    // }, (data.field.key==""?'无条件':'条件【 ' + data.field.key + ' 】') +'.xlsx', 'xlsx');
+                },
+                cellMinWidth: 100,
+                limits: [10, 15, 20, 25, 50, 100],
+                limit: 10,
+                page: true
+            });
+
+            // table.exportFile(userInfoList.config.id, data,'xls'); 
+
+            //data 为该实例中的任意数量的数据
+            //执行搜索重载
+            // table.reload('currentTableId', {
+            //     page: {
+            //         curr: 1
+            //     },
+            //     where: {
+            //         searchParams: result
+            //     }
+            // }, 'data');
+
+            return false;
+        });
+
+        // 监听添加操作
+        $(".add").on("click", function() {
+            // layer.open({
+            //     type: 2,
+            //     title: '很多时候，我们想最大化看，比如像这个页面。',
+            //     shadeClose: true,
+            //     shade: false,
+            //     maxmin: true, //开启最大化最小化按钮
+            //     area: ['893px', '600px'],
+            //     content: '//fly.layui.com/'
+            // });
+            layer.open({
+                type: 2,
+                // skin: 'layui-layer-molv',
+                title: '添加',
+                // resize :true,
+                // skin:parent.skinStyle,
+                content: ['incrementStudentInfo.html', 'yes'], //允许出现滚动条
+                area: ['700px', '570px'],
+                // btn: ['按钮一', '按钮二', '按钮三']
+            });
+        });
+
+        // 表格导入
+        $(".adds").on("click", function() {
+            // layer.open({
+            //     type: 2,
+            //     title: '很多时候，我们想最大化看，比如像这个页面。',
+            //     shadeClose: true,
+            //     shade: false,
+            //     maxmin: true, //开启最大化最小化按钮
+            //     area: ['893px', '600px'],
+            //     content: '//fly.layui.com/'
+            // });
+            layer.open({
+                type: 2,
+                // skin: 'layui-layer-molv',
+                maxmin: true,
+                title: '表格导入',
+                // skin: 'layui-layer-molv',
+                content: ['uploadExcel.html', 'yes'], //不允许出现滚动条
+                area: ['500px', '500px'],
+                success: function(layero, index) {
+                    let body = layer.getChildFrame('body', index);
+
+                    body.find(".upDo").val('api/upload/uploadExcelStu');
+                }
+            });
+        });
+
+
+        // 监听删除操作
+        $(".data-delete-btn").on("click", function() {
+            var checkStatus = table.checkStatus('currentTableId'),
+                data = checkStatus.data;
+            layer.alert(JSON.stringify(data));
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function(obj) {
+            console.log(obj)
+        });
+
+        // 监听表格操作
+        table.on('tool(currentTableFilter)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    type: 2,
+                    title: "编辑【" + data.stuNo + "】",
+                    skin: 'layui-layer-molv',
+                    area: ['800px', '500px'],
+                    // btn: ['关闭'],
+                    bthAlign: 'r',
+                    id: '',
+                    content: 'incrementStudentInfo2.html',
+                    maxmin: true,
+                    success: function(layero, index) {
+                        let body = layer.getChildFrame('body', index);
+
+                        body.find(".AstudentNo").val(data.stuNo);
+                        
+
+                    },
+                    yes: function(index, layero) {
+                        //do something
+                        let body = layer.getChildFrame('body', index);
+
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    },
+                    done: function() {
+
+                    }
+                });
+
+            } else if (obj.event === 'delete') {
+                layer.confirm('过期账户么？', function(index) {
+                    // obj.del();
+                    $.ajax({
+                        url: gpms.host + "api/admin/upStudent",
+                        type: "POST",
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        data: 'stuState=3' + '&stuNo=' + data.stuNo,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('加载中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            if (res.code == "0") {
+                                layer.msg(res.msg, { icon: 1 })
+                                // teble.reload('currentTableId',{});
+                                userInfoList.reload({
+                                    where: wh,
+                                });
+                                return;
+                            }
+                            layer.msg(res.msg, { icon: 5 });
+                        },
+                        error: function(xhr, status, error) {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+
+                    layer.close(index);
+                });
+
+
+            } else if (obj.event === 'add') {
+                layer.confirm('激活账户么？', function(index) {
+                    // obj.del();
+                    $.ajax({
+                        url: gpms.host + "api/admin/upStudent",
+                        type: "POST",
+                        xhrFields: { withCredentials: true },
+                        crossDomain: true,
+                        data: 'stuState=0' + '&stuNo=' + data.stuNo,
+                        beforeSend: function(xhr) {
+                            index = layer.msg('加载中', {
+                                icon: 16,
+                                shade: 0.01
+                            });
+                        },
+                        success: function(res) {
+                            if (res.code == "0") {
+                                layer.msg(res.msg, { icon: 1 })
+                                // teble.reload('currentTableId',{});
+                                userInfoList.reload({
+                                    where: wh,
+                                });
+                                return;
+                            }
+                            layer.msg(res.msg, { icon: 5 });
+                        },
+                        error: function(xhr, status, error) {
+                            layer.msg('接口返回异常', { icon: 5 });
+                        },
+                        complete: function(xhr, status) {
+                            layer.close(index);
+                        }
+                    })
+
+                    layer.close(index);
+                });
+            }
+        });
+        // layer.config({
+        //     extend: 'skin.css', //加载新皮肤
+        //     skin: parent.skinStyle
+        // })
+    });
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

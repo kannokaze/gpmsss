@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>教师用户信息设定</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        /*body{ background: #fff; }*/
+        .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;}
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main ">
+            <div class="" style="max-width: 725px;margin: 0 auto;">
+                <blockquote class="layui-elem-quote">我的信息</blockquote>
+                <!-- 添加专业及方向表单 -->
+                <form class="layui-form" action="#" method="post" style="margin-right: 15px;">
+                    <!-- 教师工号 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">我的工号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="teaNo" autocomplete="off" placeholder="我的工号" lay-verify="required" lay-reqtext="请输入你的工号哦！" class="layui-input layui-disabled" disabled="">
+                        </div>
+                    </div>
+                    <!-- 教师姓名 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">我的姓名：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="teaName" autocomplete="off" placeholder="我的姓名" lay-verify="required" lay-reqtext="请输入你的姓名哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!--                 教师账户密码
+<div class="layui-form-item">
+    <label class="layui-form-label required">填写密码：</label>
+    <div class="layui-input-block">
+        <input type="password" name="key" autocomplete="off" placeholder="密码" lay-verify="required" lay-reqtext="请输入教师登录密码哦！" class="layui-input">
+    </div>
+</div>
+再次确认
+<div class="layui-form-item">
+    <label class="layui-form-label required">确认密码：</label>
+    <div class="layui-input-block">
+        <input type="password" name="key" autocomplete="off" placeholder="确认密码" lay-verify="required" lay-reqtext="请确认密码哦！" class="layui-input">
+    </div>
+</div> -->
+                    <!-- 填写手机号 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">我的手机：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="teaPhone" autocomplete="off" placeholder="手机号码" lay-verify="required" lay-reqtext="请输入手机号码哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 填写邮箱地址 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">我的邮箱：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="teaMail" autocomplete="off" placeholder="教师邮箱" lay-verify="required" lay-reqtext="请输入邮箱哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 填写住址 -->
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label required">我的住址：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="teaAdd" autocomplete="off" placeholder="联系地址" lay-verify="required" lay-reqtext="请输入住址哦！" class="layui-input">
+                        </div>
+                    </div> -->
+                    <!--                     选择教师专业及方向和老师
+<div class="layui-form-item">
+    <label class="layui-form-label required">专业/方向/指导老师：</label>
+    <div class="layui-input-inline">
+        <select name="major" id="major" lay-filter="major" lay-verify="required">
+            <option value="">请选泽专业</option>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="direction" id="direction" lay-filter="direction" lay-verify="required">
+            <option value="">请选择方向</option>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="teacher" id="teacher" lay-filter="teacher" lay-verify="required">
+            <option value="">请选择指导老师：</option>
+        </select>
+    </div>
+</div>
+选择毕业行政班
+<div class="layui-form-item">
+    <label class="layui-form-label required">毕业行政班： </label>
+    <div class="layui-input-inline">
+        <select name="modules" lay-verify="required" lay-search="">
+            <option value="">直接选择或搜索选择</option>
+        </select>
+    </div>
+    <div class="layui-form-mid layui-word-aux">请勿选择错误，关系你的实习结果</div>
+</div> -->
+                    <!-- 表单信息提交或者重置 -->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交修改</button>
+                            <button type="button" class="layui-btn layui-btn-primary reset">重置</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div style="color: #666;margin-top: 30px;margin-bottom: 30px;padding-left: 30px;">
+                    <h3>说明</h3>
+                    <h4>（1）带<i style="color:red;font-size: 20px;line-height:14px;vertical-align: center">*</i>的为必填项</h4>
+                    <p>（2）填写的邮箱将用于通知和验证等用途，请认真填写！</p>
+                    <p>（3）建议没有问题不要轻易修改 </p>
+                    <p>（4）修改信息时有什么问题可以联系管理员</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../js/province.js"></script>
+<script src="../js/public.js"></script>
+<script>
+layui.use(['form', 'table'], function() {
+    var form = layui.form,
+        $ = layui.$,
+        table = layui.table,
+        $form = $('form');
+
+
+    // //监听省下拉框
+    // form.on('select(major)', function(dataObj) {
+    //     //移除城市下拉框所有选项
+    //     $("#city").empty();
+    //     var cityHtml = '<option value="">请选择或搜索市</option>';
+    //     $("#city").html(cityHtml);
+    //     var areaHtml = '<option value="">请选择或搜索县/区</option>';
+    //     $("#area").html(areaHtml);
+    //     provinceText = $("#province").find("option:selected").text();
+    //     var value = $("#province").val();
+    //     //异步加载下拉框数据
+    //     // 获取下拉选择框数据
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/gpms/api/tea/searchMajor",
+    //         data: null,
+    //         dataType: 'json',
+    //         success: function(result) {
+    //             var datas = "";
+    //             var data = result.data;
+    //             for (var i = 0; i < data.length; i++) {
+    //                 var text = data[i].rtContent.replace(/<\/?.+?>/g, "").replace(/ /g, "");
+    //                 datas += "<option value='" + text + "'>" + text + "</option>";
+    //             }
+    //             $('#TemplateOptions').append(datas);
+    //             form.render('select');
+    //         },
+    //         error: function(error) {
+    //             $.modal.alertWarning("获取模版数据失败");
+    //         }
+    //     });
+    // });
+
+    // //监听市下拉框
+    // form.on('select(city)', function(dataObj) {
+    //     //移除县区下拉框所有选项
+    //     $("#area").empty();
+    //     var html = '<option value="">请选择或搜索县/区</option>';
+    //     $("#area").html(html);
+
+    //     cityText = $("#city").find("option:selected").text();
+    //     var value = $("#city").val();
+    //     //异步加载下拉框数据
+    //     $.post(WEB_ROOT + "dtArea/queryByParentId", { "id": value }, function(data) {
+    //         if (!data.success) {
+    //             layer.msg(data.msg)
+    //         } else {
+    //             var $html = "";
+    //             if (data.data != null) {
+    //                 $.each(data.data, function(index, item) {
+    //                     $html += "<option value='" + item.id + "'>" + item.areaName + "</option>";
+    //                 });
+    //                 $("#area").append($html);
+    //                 //append后必须从新渲染
+    //                 form.render('select');
+    //             }
+    //         }
+
+    //     });
+
+    // });
+
+    // //监听县区下拉框
+    // form.on('select(area)', function(dataObj) {
+    //     areaText = $("#area").find("option:selected").text();
+    // });
+
+
+    // 获取信息展示
+    $('.reset').on('click', function() {
+        $.ajax({
+            url: gpms.host+"api/tea/myInfoInTea",
+            type: "GET",
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            async: false,
+            beforeSend: function(xhr) {
+                index = layer.msg('加载中', {
+                    icon: 16,
+                    shade: 0.01
+                });
+            },
+            success: function(res) {
+                if (res.data.length) {
+                    $('input[name="teaNo"]').val(res.data[0].teaNo);
+                    $('input[name="teaName"]').val(res.data[0].teaName);
+                    $('input[name="teaPhone"]').val(res.data[0].teaPhone);
+                    $('input[name="teaMail"]').val(res.data[0].teaEmail);
+                    $('input[name="teaAdd"]').val(res.data[0].teaAddress);
+                    $('select[name="major"]').html("<option value=" + +">" + +"</option>");
+                    $('select[name="direction"]').html("<option value=" + +">" + +"</option>");
+                    $('select[name="teacher"]').html("<option value=" + +">" + +"</option>");
+                }
+
+            },
+            error: function() {
+                layer.msg('接口返回异常', { icon: 5 });
+            },
+            complete: function(xhr, status) {
+                layer.close(index);
+            }
+        })
+    }).trigger('click');
+
+
+    form.verify({
+        title: function(value) {
+            if (value.length < 5) {
+                return '标题至少得5个字符啊';
+            }
+        },
+        pass: [
+            /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
+        ],
+        content: function(value) {
+            layedit.sync(editIndex);
+        }
+    });
+
+
+
+    //监听提交
+    form.on('submit(demo1)', function(data) {
+        var myInfo = data.field;
+        layer.confirm('确定修改吗', { title: '提示' }, function() {
+            $.ajax({
+                url: gpms.host + "api/tea/modifyMyInfo",
+                type: "POST",
+                data: 'teaNo=' + myInfo.teaNo + "&teaName=" + myInfo.teaName + "&teaPhone=" + myInfo.teaPhone + "&teaEmail=" + myInfo.teaMail ,
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                beforeSend: function(xhr) {
+                    index = layer.msg('加载中', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function(res) {
+                    if (res.code == "0") {
+                        layer.msg(res.msg, { icon: 1 })
+                    }else{
+                        layer.msg(res.msg, { icon: 5 })
+                    }
+                },
+                error: function(xhr, status, error) {
+                    layer.msg('接口返回异常', { icon: 5 });
+                },
+                complete: function(xhr, status) {
+                    layer.close(index);
+                }
+            })
+        })
+
+        return false;
+    });
+
+
+});
+</script>
+
+</html>

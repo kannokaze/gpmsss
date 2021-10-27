@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>新增学生用户</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="icon" href="../images/logo-m.png">
+    <style>
+        /*body{ background: #fff; }*/
+        .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;}
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <!-- 添加专业及方向表单 -->
+            <form class="layui-form" action="#" autocomplete="off">
+                
+                <div class="layui-inline">
+                    <!-- 学生学号 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">学生学号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuNo" autocomplete="off" placeholder="学生学号" lay-verify="required" lay-reqtext="请输入学生学号哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 学生姓名 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">学生姓名：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuName" autocomplete="off" placeholder="学生姓名" lay-verify="required" lay-reqtext="请输入学生姓名哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 学生账户密码 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">填写密码：</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="stuPassword" autocomplete="off" placeholder="密码" lay-verify="required|pass" lay-reqtext="请输入学生登录密码哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 再次确认 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">确认密码：</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="rePWD" autocomplete="off" placeholder="确认密码" lay-verify="required|repwd2" lay-reqtext="请确认密码哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 性别 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">性别：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="stuGender" value="0" title="男" checked>
+                            <input type="radio" name="stuGender" value="1" title="女">
+                        </div>
+                    </div>
+                    <!-- 占位 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-inline">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <!-- 届期 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">毕业届期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuStage" class="layui-input" id="test1" placeholder="选择时间" lay-verify="required" lay-reqtext="请选择毕业年份（届）！" lay-key="1">
+                        </div>
+                    </div>
+                    <!-- 账户转态 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">账户转态：</label>
+                        <div class="layui-input-inline">
+                            <select name="stuState" lay-verify="required">
+                                <option value="">请选择状态</option>
+                                <option value="0">正常</option>
+                                <option value="1">待审核</option>
+                                <option value="2">封禁</option>
+                                <option value="3">过期</option>
+                                <option value="4">注销</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 填写手机号 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">学生手机：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuPhone" autocomplete="off" placeholder="手机号码" lay-verify="required|phone" lay-reqtext="请输入手机号码哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 填写邮箱地址 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">学生邮箱：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuEmail" autocomplete="off" placeholder="学生邮箱" lay-verify="required|email" lay-reqtext="请输入邮箱哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 填写住址 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">学生住址：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="stuAddress" autocomplete="off" placeholder="联系地址" lay-verify="required" lay-reqtext="请输入住址哦！" class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 选择毕业行政班 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">毕业班级： </label>
+                        <div class="layui-input-inline">
+                            <select name="stuClassNo" lay-verify="required">
+                                <option value="">请选择班级</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- 选择学生专业及方向和老师 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">专业/方向/指导老师：</label>
+                    <div class="layui-input-block">
+                        <div class="layui-inline">
+                            <select name="stuMajCode" lay-verify="required" lay-filter="stuMajCode" required>
+                                <option value="">请选泽专业</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <select name="stuDirCode" lay-verify="required" lay-filter="stuDirCode" required>
+                                <option value="">请选择方向</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <select name="stuTeaNo" lay-verify="required" lay-filter="stuTeaNo" required>
+                                <option value="">请选择指导老师：</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <div class="layui-form-mid layui-word-aux">请勿填写错误，关系学生实习结果</div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- 表单信息提交或者重置 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary reset">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../js/public.js"></script>
+<script>
+layui.use(['form', 'laydate'], function() {
+    var form = layui.form,
+        laydate = layui.laydate,
+        $ = layui.$;
+
+    function setClassSelecter(ele, text, data) {
+        ele.html('<option value="">' + text + '</option>');
+        $.each(data, function(index, item) {
+            ele.append('<option value="' + item.classNo + '">' + item.className + '</option>');
+        });
+        form.render('select');
+    }
+
+    function setMajorSelecter(ele, text, data) {
+        ele.html('<option value="">' + text + '</option>');
+        $.each(data, function(index, item) {
+            ele.append('<option value="' + item.majCode + '">' + item.majName + '</option>');
+        });
+        form.render('select');
+    }
+
+    function setDirectionSelecter(ele, text, data) {
+        ele.html('<option value="">' + text + '</option>');
+        $.each(data, function(index, item) {
+            ele.append('<option value="' + item.dirCode + '">' + item.dirName + '</option>');
+        });
+        form.render('select');
+    }
+
+    function setTeacherelecter(ele, text, data) {
+        ele.html('<option value="">' + text + '</option>');
+        $.each(data, function(index, item) {
+            ele.append('<option value="' + item.teaNo + '">' + item.teaName + '</option>');
+        });
+        form.render('select');
+    }
+
+
+    $.ajax({
+        url: gpms.host + "api/admin/searchClassInfo",
+        type: "GET",
+        xhrFields: { withCredentials: true },
+        crossDomain: true,
+        beforeSend: function(xhr) {
+            index = layer.msg('加载中', {
+                icon: 16,
+                shade: 0.01
+            });
+        },
+        success: function(res) {
+            setClassSelecter($('select[name="stuClassNo"]'), '请选择班级', res.data);
+        },
+        error: function(xhr, status, error) {
+            layer.msg('接口返回异常', { icon: 5 });
+        },
+        complete: function(xhr, status) {
+            layer.close(index);
+        }
+    });
+
+    var dddd;
+    $.ajax({
+        url: gpms.host + "api/search/searchMajor",
+        type: "GET",
+        xhrFields: { withCredentials: true },
+        crossDomain: true,
+        beforeSend: function(xhr) {
+            index = layer.msg('加载中', {
+                icon: 16,
+                shade: 0.01
+            });
+        },
+        success: function(res) {
+            dddd = res.data;
+            setMajorSelecter($('select[name="stuMajCode"]'), '请选择专业', res.data);
+        },
+        error: function(xhr, status, error) {
+            layer.msg('接口返回异常', { icon: 5 });
+        },
+        complete: function(xhr, status) {
+            layer.close(index);
+        }
+    });
+
+    $.ajax({
+        url: gpms.host + "api/admin/searchTeacherByKey",
+        type: "GET",
+        xhrFields: { withCredentials: true },
+        crossDomain: true,
+        beforeSend: function(xhr) {
+            index = layer.msg('加载中', {
+                icon: 16,
+                shade: 0.01
+            });
+        },
+        success: function(res) {
+            // dddd = res.data;
+            setTeacherelecter($('select[name="stuTeaNo"]'), '请选择指导老师', res.data);
+        },
+        error: function(xhr, status, error) {
+            layer.msg('接口返回异常', { icon: 5 });
+        },
+        complete: function(xhr, status) {
+            layer.close(index);
+        }
+    });
+
+    form.on('select(stuMajCode)', function(data) {
+
+        for (var x in dddd) {
+            console.log(dddd[x])
+            console.log(data.value)
+
+            if (dddd[x].majCode == data.value) {
+                setDirectionSelecter($('select[name="stuDirCode"]'), '请选择方向', dddd[x].majorDirectionList);
+            }
+        }
+
+    });
+
+    form.on('select(stuDirCode)', function(data) {
+
+    });
+
+    form.on('select(stuTeaNo)', function(data) {
+
+    });
+
+
+
+    var start = laydate.render({
+        elem: '#test1',
+        theme: 'molv',
+        type: 'year',
+        format: 'yyyy-MM-dd',
+        trigger: 'click',
+        done: function(value, date, endDate) {
+
+        }
+    });
+
+
+    form.verify({
+        title: function(value) {
+            if (value.length < 5) {
+                return '标题至少得5个字符啊';
+            }
+        },
+        repwd2: function(value) {
+            if ($('input[name=stuPassword]').val() !== value)
+                return '两次密码输入不一致！';
+        },
+        pass: [
+            /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
+        ],
+        content: function(value) {
+            layedit.sync(editIndex);
+        }
+    });
+
+
+
+    //监听提交
+    form.on('submit(demo1)', function(data) {
+        // layer.msg(JSON.stringify(data.field));
+
+        
+
+        $.ajax({
+            url: gpms.host + "api/admin/createStudent",
+            type: "POST",
+            data:'stuNo=' + data.field.stuNo
+                + '&stuName=' + data.field.stuName
+                + '&stuPassword=' + data.field.stuPassword
+                + '&stuPhone=' + data.field.stuPhone
+                + '&stuEmail=' + data.field.stuEmail
+                + '&stuGender=' + data.field.stuGender
+                + '&stuAddress=' + data.field.stuAddress
+                + '&stuState=' + data.field.stuState
+                + '&stuStage=' + data.field.stuStage
+                + '&stuClassNo=' + data.field.stuClassNo
+                + '&stuTeaNo=' + data.field.stuTeaNo
+                + '&stuMajCode=' + data.field.stuMajCode
+                + '&stuDirCode=' + data.field.stuDirCode
+                + '&stuSchId=' + "1"
+               
+        
+            ,
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            beforeSend: function(xhr) {
+                // index = layer.msg('加载中', {
+                //     icon: 16,
+                //     shade: 0.01
+                // });
+            },
+            success: function(res) {
+                if (res.code == "0") {
+                    layer.msg(res.msg, { icon: 1 });
+                    $('.reset').trigger('click')
+                    return;
+                }
+                layer.msg(res.msg, { icon: 5 });
+
+            },
+            error: function(xhr, status, error) {
+                layer.msg('接口返回异常', { icon: 5 });
+            },
+            
+        })
+        return false;
+    });
+
+
+});
+</script>
+
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>示例文档上传</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        /*body{ background: #fff; }*/
+        .required:after {content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px;}
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-fluid ">
+                <div class="layui-row layui-col-space20">
+                    <div class="layui-col-sm6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon layui-icon-list icon"></i>文件列表</div>
+                            <div class="layui-card-body">
+                                <table class="layui-hide" lay-filter="downloadList" id="downloadList"></table>
+                                <script type="text/html" id="currentTableBar">
+                                    <button class="layui-btn layui-btn-xs download" lay-event="download">下载</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-danger delete" lay-event="delete">删除</button>
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-card" style="z-index: -1;">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-upload icon"></i>上传区域
+                                <!-- <button class="layui-btn upp layui-hide" id="upp" style="float: right;"></button> -->
+                                <!-- <button class="layui-btn" id="uppp" style="float: right;">提交</button> -->
+                            </div>
+                            <div class="layui-card-body" style="position: relative;">
+                                <form class="layui-form" action="#" method="post">
+                                    <!-- 标题 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label required">标题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="title" required lay-verify="required" placeholder="请输入示例文件名" autocomplete="off" class="layui-input" lay-reqtext="请输入示例文件名！">
+                                        </div>
+                                    </div>
+                                    <!-- 简介 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">简介</label>
+                                        <div class="layui-input-inline">
+                                            <textarea name="sign" placeholder="请给文件作用进行说明" class="layui-textarea" maxlength="255"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- 文件上传 -->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label required">文件上传</label>
+                                        <div class="layui-input-block">
+                                            <div class="layui-upload-drag" id="uuu">
+                                                <i class="layui-icon"></i>
+                                                <p>点击上传，或将文件拖拽到此处</p>
+                                                <div class="layui-hide" id="uploadDemoView">
+                                                    <hr>
+                                                    <!-- <img src="" alt="上传成功后渲染" style="max-width: 196px"> -->
+                                                </div>
+                                            </div>
+                                            <div class="layui-word-aux hasChoose"></div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn" id="" lay-filter="upper" lay-submit="">开始上传</button>
+                                            <button type="button" class="layui-hide" id="uuuu"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div style="color: #666;margin-top: 20px;padding-left: 30px;">
+                                    <blockquote class="layui-elem-quote">
+                                        <h3>说明</h3>
+                                        <h4>（1）带<i style="color:red;font-size: 20px;line-height:14px;vertical-align: center">*</i>的为必填项</h4>
+                                        <p>（2）只支持单文件发送</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--             <blockquote class="layui-elem-quote">文件列表</blockquote>
+            <blockquote class="layui-elem-quote">文件上传</blockquote> -->
+        </div>
+    </div>
+    <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+    <script src="../js/public.js"></script>
+    <script>
+    layui.use(['form', 'table', 'upload'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            upload = layui.upload;
+
+        table.render({
+            elem: '#downloadList',
+            url: gpms.host + 'api/tea/download/filesList',
+            id: "uploader",
+            height: 466,
+            cols: [
+                [
+                    // { type: "checkbox", width: 50, fixed: "left" },
+                    { field: 'Id', width: 80, title: '序号', align: 'center', templet: function(d) { return d.LAY_TABLE_INDEX + 1; } },
+                    { field: 'fileTitle', title: '标题', sort: true },
+                    { field: 'fileSign', title: '说明', },
+                    { field: 'fileUpdateTime', title: '上传时间', sort: true, templet: function(d) { return dateFormat(d.fileUpdateTime); } },
+                    { field: 'fileType', title: '类型', width: 80 },
+                    { field: 'fileSize', title: '文件大小', width: 80,templet:function(d) {
+                        return getFileSize(d.fileSize);
+                    } },
+
+                    { field: 'filePath', title: '下载地址', hide: true },
+                    { field: 'fileUpper', title: '上传者', width: 80 },
+
+
+                    { title: '操作', minWidth: 120, templet: '#currentTableBar', fixed: "right", align: "center" }
+                ]
+            ],
+            parseData: function(res) { //res 即为原始返回的数据
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            done: function(res, curr, count) {
+                gpms.isLogin(res, function() {
+
+                });
+            },
+            text: { none: "无搜索到您上传的文件" },
+            cellMinWidth: 100,
+            // limits: [10, 15, 20, 25, 50, 100],
+            // limit: 10,
+            loading: true,
+            // page: true
+        });
+
+        table.on('tool(downloadList)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'download') {
+                // var a = document.createElement('a'); // 创建a标签
+                // a.setAttribute('download',gpms.downloadHost + data.fileTitle + "." + data.fileType); // download属性
+                // a.setAttribute('href',gpms.downloadHost + data.filePath); // href链接 
+                // a.click(); // 自执行点击事件
+                download(gpms.downloadHost + data.fileRelativePath, data.fileTitle + "." + data.fileType);
+            } else if (obj.event === 'delete') {
+                $.ajax({
+                    url: gpms.host + "api/tea/upload/delete",
+                    type: "GET",
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    data: "fileId=" + data.fileId,
+                    beforeSend: function(xhr) {
+                        index = layer.msg('加载中', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                    },
+                    success: function(res) {
+                        if (res.code == "0") {
+                            table.reload('uploader', {
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                            layer.msg('文件删除成功', { icon: 1 });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        layer.msg('接口返回异常', { icon: 5 });
+                    },
+                    complete: function(xhr, status) {
+                        layer.close(index);
+                    }
+                })
+            }
+        });
+
+        //拖拽上传
+        let UPLOAD_FILES;
+        var choose_file_flag = false;
+
+        var downloadList = upload.render({
+            elem: '#uuu',
+            url: gpms.host + 'api/upload/uploadFile', //改成您自己的上传接口
+            auto: false,
+            bindAction: '#uuuu',
+            multiple: false,
+            acceptMime: '.doc,.docx,.xls,.xlsx,.ppt,.pptx',
+            accept: 'file',
+            exts: 'doc|docx|xls|xlsx|ppt|pptx',
+            size: 102400,
+            data: {
+                title: function() { return $('input[name="title"]').val() },
+                sign: function() { return $('textarea[name="sign"]').val() }
+            },
+            before: function(obj) {
+                obj.preview(function(index, file, result) {
+                    console.log(file)
+                    if (file.name.length > 0) {
+                        choose_file_flag = true;
+                    }
+                });
+            },
+            choose: function(obj) {
+                var files = this.files = obj.pushFile();
+                obj.preview(function(index, file, result) {
+                    if (file.name.length > 0) {
+                        $('.hasChoose').text('已选文件：' + file.name);
+                        choose_file_flag = true;
+                    }
+                });
+            },
+            done: function(res, index, upload) {
+                if (res.code != "0") {
+                    layer.msg(res.msg, { icon: 5 });
+                    return;
+                }
+
+                layer.msg('上传成功', { icon: 1 });
+                $('.hasChoose').text('');
+                $('input[name="title"]').val('');
+                $('textarea[name="sign"]').val('');
+                table.reload('uploader', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                delete this.files[index];
+                downloadList.config.elem.next()[0].value = '';
+                choose_file_flag = false;
+            }
+        });
+
+        $('#uuuu').on('click', function() {
+            console.log(choose_file_flag)
+            if (choose_file_flag == false) {
+                layer.alert('你没有选择文件！', {
+                    skin: 'layui-layer-molv',
+                    closeBtn: 0,
+                    btn: ['去选择'],
+                    icon: 5,
+                }, function() {
+                    layer.closeAll();
+                    $('#uuu').trigger('click');
+                });
+            }
+
+        })
+
+
+        //监听提交
+        form.on('submit(upper)', function(data) {
+            $('#uuuu').trigger('click');
+            return false;
+        });
+    });
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

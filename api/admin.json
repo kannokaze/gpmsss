@@ -1,0 +1,102 @@
+{
+    "clearInfo":
+    {
+        "clearUrl": "api/clear.json"
+    },
+    "homeInfo":
+    {
+        "title": "首页",
+        "icon": "fa fa-home",
+        "href": "page/welcome-1.html?mpi=m-p-i-0"
+    },
+    "logoInfo":
+    {
+        "title": "GPMS",
+        "image": "images/logo.png",
+        "href": ""
+    },
+    "userInfo":
+    {
+        "userName": "",
+        "type": "管理员"
+    },
+    "menuInfo":
+    {
+        "currency":
+        {
+            "title": "常规管理",
+            "icon": "fa fa-address-book",
+            "child": [
+            {
+                "title": "首页",
+                "href": "page/welcome-1.html",
+                "icon": "fa fa-home",
+                "target": "_self"
+            },
+            {
+                "title": "专业信息",
+                "href": "",
+                "icon": "fa fa-flask",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "专业管理",
+                    "href": "page/major.html",
+                    "icon": "fa fa-tachometer",
+                    "target": "_self"
+                }]
+            },
+            {
+                "title": "班级信息",
+                "href": "page/classAdmin.html",
+                "icon": "fa fa-group",
+                "target": "_self"
+            },
+            {
+                "title": "企业信息",
+                "href": "page/companyInfoAdmin.html",
+                "icon": "fa fa-briefcase",
+                "target": "_self"
+            },
+            {
+                "title": "系统账户",
+                "href": "page/table.html",
+                "icon": "fa fa-user-circle",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "学生账户",
+                    "href": "page/studentInfoAdmin.html",
+                    "icon": "fa fa-graduation-cap",
+                    "target": "_self"
+                },
+                {
+                    "title": "导师账户",
+                    "href": "page/form-step.html",
+                    "icon": "fa fa-anchor",
+                    "target": "_self"
+                },
+                {
+                    "title": "企业账户",
+                    "href": "page/form-step.html",
+                    "icon": "fa fa-user",
+                    "target": "_self"
+                }]
+            },
+            {
+                "title": "实习管理",
+                "href": "page/table.html",
+                "icon": "fa fa-gears",
+                "target": "_self",
+                "child": [
+                {
+                    "title": "实习控制",
+                    "href": "page/timeSettingAdmin.html",
+                    "icon": "fa fa-gear",
+                    "target": "_self"
+                }]
+            }]
+        }
+
+    }
+}

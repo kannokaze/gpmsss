@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>邀请企业加入</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="../images/logo-m.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main" style="width: 710px;margin: 15px auto">
+            <blockquote class="layui-elem-quote">邀请企业入驻</blockquote>
+            <form class="layui-form layuimini-form">
+                <!-- 验证邮箱 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">企业邮箱</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" placeholder="企业联系邮箱" value="" class="layui-input" lay-verify="required|email" required>
+                    </div>
+                    <div class="lay-input-span">
+                        <button type="button" lay-submit class="layui-btn getCode" lay-filter="formStep1">发送邀请</button>
+                    </div>
+                </div>
+                <hr>
+                <div style="color: #666;margin-top: 30px;margin-bottom: 30px;padding-left: 30px;">
+                    <h3>说明</h3>
+                    <h4>（1）带<i style="color:red;font-size: 20px;line-height:14px;vertical-align: center">*</i>的为必填项</h4>
+                    <p>（2）取得实习企业联系人邮箱，便可以发送邀请</p>
+                    <!-- <p> （3）忘记旧密码，可以使用邮箱验证（您的邮箱为：）</p> -->
+                </div>
+            </form>
+        </div>
+        <script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+        <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+        <script src="../js/public.js"></script>
+        <script>
+        layui.use(['form', 'layuimini'], function() {
+            var form = layui.form,
+                layer = layui.layer,
+                layuimini = layui.layuimini
+            $ = layui.$;
+
+            function sen() {
+                $.ajax({
+                    url: gpms.host + "api/userLogin/Invitation",
+                    type: "POST",
+                    data: "email=" + $("input[name='email']").val(),
+                    xhrFields: { withCredentials: true },
+                    crossDomain: true,
+                    beforeSend: function(xhr) {
+                        $('.getCode').text("邮箱发送中...");
+                        $('.getCode').attr('disabled', 'disabled');
+                        $('.getCode').addClass('layui-btn-disabled');
+                    },
+                    success: function() {
+
+                    },
+                    error: function() {
+                        layer.alert('获取失败，请检查网络后，重新获取', {
+                            title: '提示',
+                            skin: 'layui-layer-molv',
+                            closeBtn: 0,
+                            icon: 5,
+                            btn: ['重新获取']
+                        }, function() {
+                            clearInterval(timeClock);
+                            sen();
+                        });
+
+                    },
+                    complete: function(xhr, status) {
+                        var time = 60;
+                        // $('.getCode').addClass('layui-btn-disabled');
+                        $('.getCode').text(time + "s后重新获取");
+                        // $('.getCode').attr('disabled', 'disabled');
+                        timeClock = setInterval(function() {
+                            time--;
+                            $('.getCode').text(time + "s后重新获取");
+                            if (time <= 0) {
+                                $('.getCode').removeClass('layui-btn-disabled');
+                                $('.getCode').removeAttr('disabled');
+                                $('.getCode').text("获取");
+                                clearInterval(timeClock);
+                            }
+                        }, 1000);
+
+                    }
+                })
+            }
+            form.on('submit(formStep1)', function(data) {
+                sen();
+                return false;
+            })
+        });
+        </script>
+</body>
+
+</html>

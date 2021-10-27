@@ -1,0 +1,245 @@
+/* 样式一 */
+body .demo-class0 .layui-layer-title {
+    background: #1aa095;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class0 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class0 .layui-layer-btn a {
+    background: #1aa095;
+    border-color: #009f95;
+}
+
+body .demo-class0 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式二 */
+body .demo-class1 .layui-layer-title {
+    background: #23262e;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class1 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class1 .layui-layer-btn a {
+    background: #23262e;
+    border-color: #23262e;
+}
+/*body .demo-class1 .layui-layer-setwin  a {
+    background-color: #ccc !important;
+    content: "&#xe60c";
+    color:#fff;
+}*/
+    
+body .demo-class1 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+body .demo-class1 .layui-layer-btn .layui-layer-btn2 {
+	background: #666;
+    color: #fff;
+}
+/* 样式三 */
+body .demo-class2 .layui-layer-title {
+    background: #ffa4d1;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class2 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class2 .layui-layer-btn a {
+    background: #ffa4d1;
+    border-color: #ffa4d1;
+}
+
+body .demo-class2 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式四 */
+body .demo-class3 .layui-layer-title {
+    background: #1aa094;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class3 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class3 .layui-layer-btn a {
+    background: #1aa094;
+    border-color: #1aa094;
+}
+
+body .demo-class3 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式五 */
+body .demo-class4 .layui-layer-title {
+    background: #1e9fff;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class4 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class4 .layui-layer-btn a {
+    background: #1e9fff;
+    border-color: #1e9fff;
+}
+
+
+body .demo-class4 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+/* 样式六 */
+body .demo-class5 .layui-layer-title {
+    background: #ffb800;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class5 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class5 .layui-layer-btn a {
+    background: #ffb800;
+    border-color: #ffb800;
+}
+
+body .demo-class5 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+/* 样式七 */
+body .demo-class6 .layui-layer-title {
+    background: #e82121;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class6 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class6 .layui-layer-btn a {
+    background: #e82121;
+    border-color: #e82121;
+}
+
+body .demo-class6 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式八 */
+body .demo-class7 .layui-layer-title {
+    background: #963885;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class7 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class7 .layui-layer-btn a {
+    background: #963885;
+    border-color: #963885;
+}
+
+body .demo-class7 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+/* 样式九 */
+body .demo-class8 .layui-layer-title {
+    background: #1e9fff;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class8 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class8 .layui-layer-btn a {
+    background: #1e9fff;
+    border-color: #1e9fff;
+}
+
+body .demo-class8.layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式十 */
+body .demo-class9 .layui-layer-title {
+    background: #ffb800;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class9 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class9 .layui-layer-btn a {
+    background: #ffb800;
+    border-color: #ffb800;
+}
+
+body .demo-class9 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式十一 */
+body .demo-class10 .layui-layer-title {
+    background: #e82121;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class10 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class10 .layui-layer-btn a {
+    background: #e82121;
+    border-color: #e82121;
+}
+
+body .demo-class10 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
+
+/* 样式十二 */
+body .demo-class11 .layui-layer-title {
+    background: #963885;
+    color: #fff;
+    border: none;
+}
+
+body .demo-class11 .layui-layer-btn {
+    border-top: 1px solid#E9E7E7;
+}
+
+body .demo-class11 .layui-layer-btn a {
+    background: #963885;
+    border-color: #963885;
+}
+
+body .demo-class11 .layui-layer-btn .layui-layer-btn1 {
+    background: #fff;
+}
